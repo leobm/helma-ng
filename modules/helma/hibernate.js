@@ -18,7 +18,6 @@ importJar('hibernate/ehcache-1.2.3.jar');
 importModule('helma.rhino', 'rhino');
 importFromModule('helma.functional', 'partial');
 importModule('helma.logging', 'logging');
-logging.enableResponseLog();
 var log = logging.getLogger(__name__);
 
 var __shared__ = true;
