@@ -18,11 +18,11 @@ How to Run
 
 3. Issue, e.g., the following command in the hibernate-blog directory:
 
-   hibernate-blog> java -jar ../../run.jar app modules
+   hibernate-blog> java -jar ../../run.jar app modules config
 
    Or, alternatively, e.g., the following one in the helma-ng dir:
 
-   helma-ng> java -jar run.jar apps/hibernate-blog/app apps/hibernate-blog/modules
+   helma-ng> java -jar run.jar apps/hibernate-blog/app apps/hibernate-blog/modules apps/hibernate-blog/config
 
 4. Then point your browser to:
 

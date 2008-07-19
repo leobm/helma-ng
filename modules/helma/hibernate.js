@@ -27,7 +27,7 @@ var __shared__ = true;
 var isDevEnvironment = false;
 
 // used to get paths of hibernate.properties and mapping files
-var configPropsRelativePath = '../config/hibernate.properties';
+var configPropsRelativePath = 'hibernate.properties';
 var mappingsDirRelativePath = 'mappings';
 
 // used for holding the Store instance
