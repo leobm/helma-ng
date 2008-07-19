@@ -14,9 +14,3 @@ var Map = rhino.extendJavaClass(java.util.Map);
 Map.prototype.__iterator__ = function () { 
    return Iterator(this.entrySet());
 };
-
-
-String.prototype.processMarkdown = function () {
-   var processor = new org.helma.util.MarkdownProcessor(this);
-   return processor.process();
-};

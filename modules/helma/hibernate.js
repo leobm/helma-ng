@@ -15,7 +15,6 @@ importJar('hibernate/hibernate3.jar');
 importJar('hibernate/jta.jar');
 importJar('hibernate/c3p0-0.9.1.jar');
 importJar('hibernate/ehcache-1.2.3.jar');
-importJar('hibernate/mysql-connector-java-5.1.6-bin.jar');
 
 importModule('helma.rhino', 'rhino');
 importFromModule('helma.functional', 'partial');

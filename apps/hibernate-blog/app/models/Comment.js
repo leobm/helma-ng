@@ -1,5 +1,5 @@
 importModule('helma.hibernate', 'db');
-importFromModule('inheritance', 'mixin');
+importFromModule('helma.inheritance', 'mixin');
 importFromModule('validation', '*');
 importModule('models.Post', 'genericModel');
 importModule('models.Article', 'articleModel');

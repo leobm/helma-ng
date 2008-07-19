@@ -375,6 +375,15 @@ String.prototype.md5 = function() {
 
 
 /**
+ * function processes a string according to Markdown syntax spec.
+ */
+String.prototype.processMarkdown = function () {
+   var processor = new org.helma.util.MarkdownProcessor(this);
+   return processor.process();
+};
+
+
+/**
  * function repeats a string passed as argument
  * @param Int amount of repetitions
  * @return String resulting string

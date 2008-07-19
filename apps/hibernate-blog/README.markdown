@@ -9,17 +9,22 @@ How to Run
 ==========
 
 1. Start your MySQL server and create the DB & user with:
+
    hibernate-blog/build/db.sql
 
-2. Issue, e.g., the following command in the hibernate-blog directory:
+2. Put MySQL Connector/J into the Helma NG lib dir, e.g.:
 
-   hibernate-blog> java -jar ../../run.jar app modules lib
+   helma-ng> cp apps/hibernate-blog/build/lib/mysql-connector-java-5.1.6-bin.jar lib/
+
+3. Issue, e.g., the following command in the hibernate-blog directory:
+
+   hibernate-blog> java -jar ../../run.jar app modules
 
    Or, alternatively, e.g., the following one in the helma-ng dir:
 
-   helma-ng> java -jar run.jar apps/hibernate-blog/app apps/hibernate-blog/modules apps/hibernate-blog/lib
+   helma-ng> java -jar run.jar apps/hibernate-blog/app apps/hibernate-blog/modules
 
-3. Then point your browser to:
+4. Then point your browser to:
 
    http://localhost:8080/
 
