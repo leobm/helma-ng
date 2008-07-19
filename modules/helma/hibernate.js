@@ -3,7 +3,6 @@
  * @author Robert Thurnher <r.thurnher@gmail.com>
  */
 
-importJar('hibernate/config');
 importJar('hibernate/antlr-2.7.6.jar');
 importJar('hibernate/asm-attrs.jar');
 importJar('hibernate/asm.jar');
@@ -77,8 +76,8 @@ this.initStore();
     * Sets the basic Hibernate configuration.
     */
    var setConfig = function () {
-      var configPropsAbsolutePath = getResource(configPropsRelativePath).path;
       var mappingsDirAbsolutePath = getResource(mappingsDirRelativePath).path;
+      var configPropsAbsolutePath = getResource(configPropsRelativePath).path;
       var inputStream = new java.io.FileInputStream(new java.io.File(configPropsAbsolutePath));
       var configProps = new java.util.Properties();
 
@@ -88,9 +87,21 @@ this.initStore();
 
       // set configuration
       config = new org.hibernate.cfg.Configuration();
-      config.setProperties(configProps);
-      config.setProperty('hibernate.default_entity_mode', 'dynamic-map');
+      // add mappings dir
       config.addDirectory(new java.io.File(mappingsDirAbsolutePath));
+      // set properties from hibernate.properties file
+      config.setProperties(configProps);
+      // use dynamic-map entity persistence mode
+      config.setProperty('hibernate.default_entity_mode', 'dynamic-map');
+      // transactions are handled by JDBC, no JTA is used
+      config.setProperty('hibernate.transaction.factory_class', 'org.hibernate.transaction.JDBCTransactionFactory');
+      // bind session to thread context
+      config.setProperty('hibernate.current_session_context_class', 'thread');
+      // enable the second level cache
+      config.setProperty('hibernate.cache.use_second_level_cache', 'true');
+      config.setProperty('hibernate.cache.use_query_cache', 'true');
+      // use easy hibernate (eh) cache
+      config.setProperty('hibernate.cache.provider_class', 'net.sf.ehcache.hibernate.SingletonEhCacheProvider');
 
       isConfigured = true;
       log.info('Configuration set.');
