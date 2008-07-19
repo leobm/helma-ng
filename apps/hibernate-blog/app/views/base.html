@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Blog NG - <% path %></title>
+    <link href="/static/favicon.png" rel="shortcut icon" type="image/png" />
+    <link rel="stylesheet" href="/static/style.css" type="text/css" media="screen" title="Style CSS" charset="utf-8" />
+    <% render 'headScripts' %>
+  </head>
+
+  <body>
+    <% message prefix='<div id="message">' suffix='</div>' %>
+    <div id="header">
+      <div id="logo">
+        <a href="/" title="Home"><img src="/static/logo.png" alt="Home" /></a>
+      </div>
+      <% render 'content' %>
+
+      <div id="footer">
+        <a href="http://dev.helma.org/ng/" title="powered by Helma NG"><img src="/static/helma.png" alt="powered by Helma NG" /></a>
+      </div>
+
+      <% render 'wmdScript' %>
+  </body>
+</html>

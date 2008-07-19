@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class entity-name="Comment" table="BLOG_COMMENTS">
+        <cache usage="read-write" />
+
+        <id name="id"
+            column="COMMENT_ID"
+            type="long">
+            <generator class="native" />
+        </id>
+
+        <property name="text"
+            column="COMMENT_TEXT"
+            type="text"
+            not-null="true" />
+
+        <property name="createTime"
+            column="COMMENT_CREATE_TIME"
+            type="timestamp"
+            not-null="true"
+            update="false" />
+
+        <many-to-one name="creator"
+            column="COMMENT_F_USER_CREATOR_ID"
+            class="User"
+            not-null="true"
+            update="false" />
+
+    </class>
+
+</hibernate-mapping>

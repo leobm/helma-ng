@@ -1,0 +1,19 @@
+<% extends '../base.html' %>
+
+<% subskin 'content' %>
+  <div id="heading">
+    <h1>Delete Article "<% title %>"</h1>
+  </div>
+</div>
+
+<form action="" method="post" accept-charset="utf-8">
+  <input type="hidden" name="id" value="<% id %>" />
+  <p>
+    Are you sure you want to delete this article?
+  </p>
+
+  <p>
+    <a href="show?id=<% id %>">&larr; Cancel</a>&nbsp;
+    <input type="submit" name="save" value="OK" />
+  </p>
+</form>

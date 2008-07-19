@@ -1,0 +1,51 @@
+<% extends '../base.html' %>
+
+<% subskin 'content' %>
+  <div id="heading">
+    <h1>Welcome to Blog NG! ^^</h1>
+  </div>
+</div>
+
+<div id="main-admin-tasks">
+  <% loginLink %>
+  <% registerLink %>
+  <% createArticleLink %>
+  <% logoutLink %>
+</div>
+
+<div id="articles">
+  <% list %>
+</div>
+
+<% subskin 'loginLink' %>
+<strong><a href="/account/login">&raquo; Login</a></strong>&nbsp;&nbsp;|&nbsp;
+
+<% subskin 'registerLink' %>
+<strong><a href="/account/register">&raquo; Register</a></strong>
+
+<% subskin 'createArticleLink' %>
+<strong><a href="create">&raquo; Create a new article</a></strong>&nbsp;&nbsp;|&nbsp;
+
+<% subskin 'logoutLink' %>
+<strong><a href="/account/logout">&raquo; Logout</a></strong>
+
+<% subskin 'listItem' %>
+<div class="article-list-item">
+
+  <div class="article-heading-container">
+    <h2 class="article-heading">
+      <a href="<% href %>"><% title %></a>
+    </h2>
+
+    <p class="article-meta-container">
+      <small>
+        <em><strong><% creator %></strong> @ <strong><% createTime %></strong></em><br />
+        <a href="<% href %>#comments"><% commentsCountMsg %></a>
+      </small>
+    </p>
+  </div>
+
+  <p>
+    <% text %>
+  </p>
+</div>

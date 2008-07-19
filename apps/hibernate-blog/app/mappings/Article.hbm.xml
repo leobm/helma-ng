@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class entity-name="Article" table="BLOG_ARTICLES">
+        <cache usage="read-write" />
+
+        <id name="id"
+            column="ARTICLE_ID"
+            type="long">
+            <generator class="native" />
+        </id>
+
+        <property name="title"
+            column="ARTICLE_TITLE"
+            type="string"
+            not-null="true" />
+
+        <property name="text"
+            column="ARTICLE_TEXT"
+            type="text"
+            not-null="true" />
+
+        <property name="createTime"
+            column="ARTICLE_CREATE_TIME"
+            type="timestamp"
+            not-null="true"
+            update="false" />
+
+        <property name="updateTime"
+            column="ARTICLE_UPDATE_TIME"
+            type="timestamp" />
+
+        <many-to-one name="creator"
+            column="ARTICLE_F_USER_CREATOR_ID"
+            class="User"
+            not-null="true"
+            update="false" />
+
+        <set name="comments"
+            cascade="all-delete-orphan"
+            order-by="COMMENT_CREATE_TIME">
+            <key column="COMMENT_F_ARTICLE_TARGET_ID" />
+            <one-to-many class="Comment" />
+        </set>
+
+    </class>
+
+</hibernate-mapping>

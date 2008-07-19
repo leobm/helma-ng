@@ -1,0 +1,46 @@
+<% extends '../base.html' %>
+
+<% subskin 'headScripts' %>
+<script type="text/javascript" charset="utf-8" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/toggle.js"></script>
+
+<% subskin 'content' %>
+  <div id="heading">
+    <h1>Edit Article "<% title %>"</h1>
+  </div>
+</div>
+
+<form action="" method="post" accept-charset="utf-8">
+  <input type="hidden" name="id" value="<% id %>" />
+  <p>
+    <label for="title">Title:</label><br />
+    <input type="text" name="title" id="title" size="50" value="<% title %>" />
+  </p>
+
+  <p id="to-toggle" style="display: none;">
+    <a href="http://daringfireball.net/projects/markdown/basics" target="_blank">Markdown</a> is a <a href="http://en.wikipedia.org/wiki/Lightweight_markup_language" target="_blank">lightweight markup language</a>, originally created by John Gruber and Aaron Swartz, which aims for maximum readability and "publishability" of both its input and output forms, taking many cues from existing conventions for marking up plain text in email.
+  </p>
+
+  <div id="wmd-container">
+    <p id="wmd-left-container">
+      <label for="text" id="wmd-label">Text:</label>
+      <span id="wmd-toggle-container">
+        <small>(<a href="#" id="toggle">Some Markdown is fine.</a>)</small>
+      </span><br />
+      <textarea name="text" id="text" rows="18" cols="56"><% text %></textarea><br />
+    </p>
+    <p id="wmd-right-container">
+      <h2 id="wmd-right-container-heading">Live Preview</h2>
+      <div class="wmd-preview"></div>
+    </p>
+  </div>
+  <div style="clear: both;"></div>
+
+  <p>
+    <a href="show?id=<% id %>">&larr; Cancel</a>&nbsp;
+    <input type="submit" name="save" value="OK" />
+  </p>
+</form>
+
+<% subskin 'wmdScript' %>
+<script type="text/javascript" src="http://box1.wmd-editor.com/1701/wmd.js"></script>

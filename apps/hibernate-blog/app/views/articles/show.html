@@ -1,0 +1,68 @@
+<% extends '../base.html' %>
+
+<% subskin 'content' %>
+  <div id="heading">
+    <h1><a href="show?id=<% id %>"><% title %></a></h1>
+  </div>
+</div>
+
+<div id="article-content">
+  <p class="article-meta-container">
+    <small>
+      <em><strong><% creator %></strong> @ <strong><% createTime %></strong></em>
+      <% adminTasks %>
+    </small>
+  </p>
+
+  <p>
+    <% text %>
+  </p>
+</div>
+
+<a name="comments"></a>
+<h2>Comments</h2>
+<div id="commentsContainer">
+  <% noCommentsMsg %>
+  <% listComments %>
+</div>
+
+<% loginRegisterInfo %>
+<% addCommentForm %>
+
+<% subskin 'adminTasks' %>
+<br />
+<a href="edit?id=<% id %>">&raquo; Edit this article</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="delete?id=<% id %>">&raquo; Delete this article</a>
+
+<% subskin 'noCommentsMsg' %>
+<p>
+  <h3>None exist (yet)</h3>
+</p>
+
+<% subskin 'commentListItem' %>
+<a name="comment<% commentId %>"></a>
+<p>
+  <h3><% commentCreator %> @ <% commentCreateTime %> <a href="#comment<% commentId %>">#</a></h3>
+  <% commentText %>
+</p>
+
+<% subskin 'loginRegisterInfo' %>
+<p>
+  <a href="/account/login">Login</a> or <a href="/account/register">register</a> for adding comments.
+</p>
+
+<% subskin 'addCommentForm' %>
+<a name="addComment"></a>
+<% message prefix='<div id="message">' suffix='</div>' %>
+
+<form action="/comments/create" method="post" accept-charset="utf-8">
+  <input type="hidden" name="articleId" value="<% id %>" id="articleId" />
+
+  <p>
+    <label for="text">Comment:</label><br />
+    <textarea name="text" id="text" rows="12" cols="56"></textarea>
+  </p>
+
+  <p>
+    <input type="submit" name="save" value="OK" />
+  </p>
+</form>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class entity-name="User" table="BLOG_USERS">
+        <cache usage="read-write" />
+
+        <id name="id"
+            column="USER_ID"
+            type="long">
+            <generator class="native" />
+        </id>
+
+        <property name="name"
+            column="USER_NAME"
+            type="string"
+            not-null="true" />
+
+        <property name="password"
+            column="USER_PASSWORD"
+            type="string"
+            not-null="true" />
+
+        <property name="isAdmin"
+            column="USER_IS_ADMIN"
+            type="boolean"
+            not-null="true" />
+
+        <property name="createTime"
+            column="USER_CREATE_TIME"
+            type="timestamp"
+            not-null="true"
+            update="false" />
+
+    </class>
+
+</hibernate-mapping>

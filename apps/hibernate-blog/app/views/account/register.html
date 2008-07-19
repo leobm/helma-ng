@@ -1,0 +1,26 @@
+<% extends '../base.html' %>
+
+<% subskin 'content' %>
+  <div id="heading">
+    <h1>Register an <% adminPrefix %>User</h1>
+  </div>
+</div>
+
+<form action="" method="post" accept-charset="utf-8">
+  <p>
+    <label for="name">Name:</label><br />
+    <input type="text" name="name" id="name" size="30" value="<% name %>" />
+  </p>
+  <p>
+    <label for="password">Password:</label><br />
+    <input type="password" name="password" id="password" size="30" value="<% password %>" />
+  </p>
+
+  <p>
+    <a href="/">&larr; Cancel</a>&nbsp;
+    <input type="submit" name="save" value="OK" />
+  </p>
+</form>
+
+<% subskin 'adminPrefix' %>
+Admin
