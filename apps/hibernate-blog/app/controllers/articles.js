@@ -30,7 +30,7 @@ function main_action() {
                var commentsCount = article.comments.size();
                res.write(commentsCount);
                (commentsCount == 1) ? res.write(' comment') : res.write(' comments');
-            },
+            };
             context.href = 'show?id=' + article.id;
             context.title = article.title;
             context.text = article.getTeaserText();
