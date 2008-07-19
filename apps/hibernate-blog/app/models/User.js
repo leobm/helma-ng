@@ -16,6 +16,8 @@ function doCreate(data) {
       createTime: new java.util.Date(),
       name: data.name,
       password: data.password.md5(),
+      websiteUrl: (data.websiteUrl && !data.websiteUrl.startsWith('http://')) ?
+                  'http://' + data.websiteUrl : data.websiteUrl || null,
       isAdmin: (User.all().size() == 0) ? true : false
    };
    var user = new User(props);

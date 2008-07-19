@@ -68,7 +68,9 @@ function show_action() {
                comment = comments[i];
                var subskinContext = {
                   commentNumber: parseInt(i) + 1,
-                  commentCreator: comment.getCreatorName(),
+                  commentCreator: comment.creator.websiteUrl ?
+                                  '<a href="' + comment.creator.websiteUrl + '">' + comment.getCreatorName() + '</a>' :
+                                  comment.getCreatorName(),
                   commentCreateTime: comment.getFormattedCreateTime(),
                   commentText: comment.getMarkdownedText()
                };

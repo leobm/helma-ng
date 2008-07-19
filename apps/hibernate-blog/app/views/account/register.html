@@ -15,6 +15,7 @@
     <label for="password">Password:</label><br />
     <input type="password" name="password" id="password" size="30" value="<% password %>" />
   </p>
+  <% websiteUrlInput %>
 
   <p>
     <a href="/">&larr; Cancel</a>&nbsp;
@@ -24,3 +25,10 @@
 
 <% subskin 'adminPrefix' %>
 Admin
+
+<% subskin 'websiteUrlInput' %>
+<p>
+  <label for="websiteUrl">Website URL:</label><br />
+  <input type="text" name="websiteUrl" id="websiteUrl" size="30" value="<% websiteUrl %>" /><br />
+  <small><em>(optional)</em></small>
+</p>

@@ -23,6 +23,10 @@
             type="string"
             not-null="true" />
 
+        <property name="websiteUrl"
+            column="USER_WEBSITE_URL"
+            type="string" />
+
         <property name="isAdmin"
             column="USER_IS_ADMIN"
             type="boolean"

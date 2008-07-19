@@ -16,8 +16,12 @@ function register_action() {
          adminPrefix: function (macrotag, skin) {
             checkRender('adminPrefix', skin, userModel.User.all().size() == 0);
          },
+         websiteUrlInput: function (macrotag, skin) {
+            checkRender('websiteUrlInput', skin, userModel.User.all().size() > 0);
+         },
          name: req.params.name || '',
-         password: req.params.password || ''
+         password: req.params.password || '',
+         websiteUrl: req.params.websiteUrl || ''
       };
       renderView(context);
 }
