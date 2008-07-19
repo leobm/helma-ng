@@ -27,7 +27,7 @@ var __shared__ = true;
 var isDevEnvironment = false;
 
 // used to get paths of hibernate.properties and mapping files
-var configPropsRelativePath = 'hibernate.properties';
+var configPropsFileName     = 'hibernate.properties';
 var mappingsDirRelativePath = 'mappings';
 
 // used for holding the Store instance
@@ -77,7 +77,7 @@ this.initStore();
     */
    var setConfig = function () {
       var mappingsDirAbsolutePath = getResource(mappingsDirRelativePath).path;
-      var configPropsAbsolutePath = getResource(configPropsRelativePath).path;
+      var configPropsAbsolutePath = getResource(configPropsFileName).path;
       var inputStream = new java.io.FileInputStream(new java.io.File(configPropsAbsolutePath));
       var configProps = new java.util.Properties();
 
