@@ -11,6 +11,10 @@ function Article(props) {
    // mixin all instance methods of Post
    mixin(this, genericModel.Post);
 
+   this.getTeaserText = function () {
+      return this.getMarkdownedText().stripTags().head(200, ' ...');
+   }
+
    return new db.Storable(this, props);
 }
 db.store.registerType(Article);

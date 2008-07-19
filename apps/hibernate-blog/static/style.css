@@ -64,7 +64,7 @@ input:focus, textarea:focus {
   margin-bottom: 1.5em;
 }
 
-#wmd-container {
+#wmd-container, #add-comment-container {
   width: 80%;
   min-width: 1000px;
 }
@@ -93,13 +93,18 @@ input:focus, textarea:focus {
   margin-left: 22em;
 }
 
-#wmd-label {
+#wmd-label, #add-comment-label {
   float: left;
 }
 
 #wmd-toggle-container {
   float: right;
   margin-right: 1.2em;
+}
+
+#add-comment-toggle-container {
+  float: right;
+  margin-right: 31.5em;
 }
 
 .wmd-preview {
@@ -110,7 +115,7 @@ input:focus, textarea:focus {
 }
 
 #to-toggle {
-  width: 460px;
+  width: 475px;
   border: 1px solid #000;
   background-color: #B0C4DE;
   padding: 4px 10px 4px 10px;

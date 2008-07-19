@@ -33,7 +33,7 @@ function main_action() {
             },
             context.href = 'show?id=' + article.id;
             context.title = article.title;
-            context.text = article.getMarkdownedText();
+            context.text = article.getTeaserText();
             context.createTime = article.getFormattedCreateTime();
             context.creator = article.getCreatorName();
             skin.renderSubskin('listItem', context);
@@ -58,6 +58,11 @@ function show_action() {
                         session.data.userId && userModel.User.get(session.data.userId).isAdmin,
                         context);
          },
+         commentsCountMsg: function () {
+            var commentsCount = article.comments.size();
+            res.write(commentsCount);
+            (commentsCount == 1) ? res.write(' comment') : res.write(' comments');
+         },
          noCommentsMsg: function (macrotag, skin) {
             checkRender('noCommentsMsg', skin, article.comments.size() == 0);
          },
@@ -67,7 +72,7 @@ function show_action() {
             for (var i in comments) {
                comment = comments[i];
                var subskinContext = {
-                  commentId: comment.id,
+                  commentNumber: parseInt(i) + 1,
                   commentCreator: comment.getCreatorName(),
                   commentCreateTime: comment.getFormattedCreateTime(),
                   commentText: comment.getMarkdownedText()
