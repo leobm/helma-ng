@@ -38,7 +38,7 @@ function doCreate(data) {
 }
 
 function validateCreate(data) {
-   validatePresenceOf(data.text, 'Text');
+   validatePresenceOf({ value: data.text, msg: 'Text was empty.' });
 }
 
 
@@ -55,8 +55,8 @@ function doUpdate(data) {
 }
 
 function validateUpdate(data) {
-   validatePresenceOf(data.title, 'Title');
-   validatePresenceOf(data.text, 'Text');
+   this.validateCreate(data);
+   validatePresenceOf({ value: data.title, msg: 'Title was empty.' });
 }
 
 

@@ -32,5 +32,5 @@ function doCreate(data) {
 }
 
 function validateCreate(data) {
-   validatePresenceOf(data.text, 'Text');
+   validatePresenceOf({ value: data.text, msg: 'Text was empty.' });
 }
