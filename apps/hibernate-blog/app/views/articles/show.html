@@ -13,7 +13,7 @@
 <div id="article-content">
   <p class="article-meta-container">
     <small>
-      <em><strong><% creator %></strong> @ <strong><% createTime %></strong></em><br />
+      <strong><% creator %></strong> @ <strong><% createTime %></strong><br />
       <% adminTasks %>
     </small>
   </p>
@@ -24,7 +24,7 @@
 </div>
 
 <a name="comments"></a>
-<h2>Comments <small>(<a href="<% href %>#addComment">Add &darr;</a>)</small></h2>
+<h2>Comments <small><em>(<a href="<% href %>#addComment">Add &darr;</a>)</em></small></h2>
 <div id="commentsContainer">
   <% noCommentsMsg %>
   <% listComments %>
@@ -72,7 +72,7 @@
   <p>
     <label for="text" id="add-comment-label">Comment:</label>
     <span id="add-comment-toggle-container">
-      <small>(<a href="#" id="toggle">Some Markdown is fine.</a>)</small>
+      <small><em>(<a href="#" id="toggle">Some Markdown is fine.</a>)</em></small>
     </span><br />
     <textarea name="text" id="text" rows="12" cols="56"></textarea>
   </p>
