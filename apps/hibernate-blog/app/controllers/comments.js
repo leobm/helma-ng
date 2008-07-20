@@ -5,7 +5,7 @@ importModule('models.Comment', 'commentModel');
 function create_action() {
    handlePostReq(this);
 
-   res.redirect('/articles/show?id=' + req.params.articleId);
+   res.redirect('/articles/show?id=' + req.params.articleId + '#addComment');
 }
 
 function onCreatePostReq() {
