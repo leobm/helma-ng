@@ -148,6 +148,10 @@ input:focus, textarea:focus {
   background-color: #DDD;
 }
 
+.article-text {
+  margin-top: 1.2em;
+}
+
 #article-content {
   min-height: 110px;
 }
