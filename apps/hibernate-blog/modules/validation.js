@@ -5,6 +5,14 @@ function validatePresenceOf(params) {
 }
 
 
+function validateLengthOf(params) {
+   if ( (params.max && (params.value.length > params.max)) ||
+        (params.min && (params.value.length < params.min)) ) {
+      throw new Error(params.msg);
+   }
+}
+
+
 function validateFormatOf(params) {
    var evaluation = (params.condition && params.condition == '!match') ?
                     params.value.match(params.regex) :

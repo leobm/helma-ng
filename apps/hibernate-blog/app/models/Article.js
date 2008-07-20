@@ -12,7 +12,7 @@ function Article(props) {
    mixin(this, genericModel.Post);
 
    this.getTeaserText = function () {
-      return this.getMarkdownedText().stripTags().head(200, ' ...');
+      return this.getMarkdownedText().stripTags().head(250, ' ...');
    }
 
    return new db.Storable(this, props);
@@ -27,7 +27,7 @@ function doCreate(data) {
       creator: userModel.User.get(session.data.userId),
       createTime: new java.util.Date(),
       title: data.title || ( (data.text.processMarkdown().stripTags() != 0) ?
-                             data.text.processMarkdown().stripTags().trim().head(50, '...') :
+                             data.text.processMarkdown().stripTags().trim().head(47, '...') :
                              '...' ),
       text: data.text
    };
@@ -39,6 +39,7 @@ function doCreate(data) {
 
 function validateCreate(data) {
    validatePresenceOf({ value: data.text, msg: 'Text was empty.' });
+   validateLengthOf({ value: data.title, max: 50, msg: 'Title was too long.' })
 }
 
 
