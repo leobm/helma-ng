@@ -29,6 +29,10 @@ input:focus, textarea:focus {
   border: 1px solid #000;
 }
 
+input.submit {
+  font-weight: bold;
+}
+
 #message {
   background-color: #000080;
   color: #FFF;
