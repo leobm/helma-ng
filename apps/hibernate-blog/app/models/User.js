@@ -16,7 +16,7 @@ function doCreate(data) {
       createTime: new java.util.Date(),
       name: data.name,
       password: data.password.md5(),
-      websiteUrl: (data.websiteUrl && !data.websiteUrl.startsWith('http://')) ?
+      websiteUrl: (data.websiteUrl && !data.websiteUrl.startsWith('http://') && !data.websiteUrl.startsWith('https://')) ?
                   'http://' + data.websiteUrl : data.websiteUrl || null,
       isAdmin: (User.all().size() == 0) ? true : false
    };
@@ -27,8 +27,15 @@ function doCreate(data) {
 }
 
 function validateCreate(data) {
-   validatePresenceOf(data, 'name');
-   validatePresenceOf(data, 'password');
+   validatePresenceOf(data.name, 'Name');
+   validatePresenceOf(data.password, 'Password');
+   if (data.websiteUrl) {
+      validateFormatOf(data.websiteUrl, 'Website URL', /^(https?:\/\/)?[A-Za-z0-9\.-]{2,}\.[A-Za-z]{2}/);
+   }
+
+   if (User.find("where u.name ='" + data.name + "'").size() > 0) {
+      throw new Error('User name "' + data.name + '" already exists.');
+   }
 }
 
 

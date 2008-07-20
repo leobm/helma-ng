@@ -38,7 +38,7 @@ function doCreate(data) {
 }
 
 function validateCreate(data) {
-   validatePresenceOf(data, 'text');
+   validatePresenceOf(data.text, 'Text');
 }
 
 
@@ -55,8 +55,8 @@ function doUpdate(data) {
 }
 
 function validateUpdate(data) {
-   validatePresenceOf(data, 'title');
-   validatePresenceOf(data, 'text');
+   validatePresenceOf(data.title, 'Title');
+   validatePresenceOf(data.text, 'Text');
 }
 
 

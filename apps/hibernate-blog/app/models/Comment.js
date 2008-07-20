@@ -32,5 +32,5 @@ function doCreate(data) {
 }
 
 function validateCreate(data) {
-   validatePresenceOf(data, 'text');
+   validatePresenceOf(data.text, 'Text');
 }
