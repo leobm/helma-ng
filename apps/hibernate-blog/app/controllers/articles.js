@@ -58,8 +58,10 @@ function show_action() {
                         session.data.userId && userModel.User.get(session.data.userId).isAdmin,
                         context);
          },
-         noCommentsMsg: function (macrotag, skin) {
-            checkRender('noCommentsMsg', skin, article.comments.size() == 0);
+         commentsCountMsg: function () {
+            var commentsCount = article.comments.size();
+            res.write(commentsCount);
+            (commentsCount == 1) ? res.write(' Comment') : res.write(' Comments');
          },
          listComments: function (macrotag, skin) {
             var comments = article.comments.toColl();

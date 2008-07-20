@@ -16,6 +16,7 @@
         <property name="name"
             column="USER_NAME"
             type="string"
+            unique="true"
             not-null="true" />
 
         <property name="password"
