@@ -27,14 +27,14 @@ function doCreate(data) {
 }
 
 function validateCreate(data) {
-   validatePresenceOf({ value: data.name, msg: 'Name was empty.' });
-   validatePresenceOf({ value: data.password, msg: 'Password was empty.' });
+   validatePresenceOf(data.name, { msg: 'Name was empty.' });
+   validatePresenceOf(data.password, { msg: 'Password was empty.' });
    if (data.websiteUrl) {
-      validateFormatOf({ value: data.websiteUrl, regex: /^(https?:\/\/)?[A-Za-z0-9\.-]{2,}\.[A-Za-z]{2}/,
-                         msg: 'Website URL was invalid.' });
+      validateFormatOf(data.websiteUrl, { regex: /^(https?:\/\/)?[A-Za-z0-9\.-]{2,}\.[A-Za-z]{2}/,
+                                          msg: 'Website URL was invalid.' });
    }
-   validateUniquenessOf({ key: 'name', value: data.name, type: User,
-                          msg: 'User name "' + data.name + '" already exists.'})
+   validateUniquenessOf(data.name, { key: 'name', type: User,
+                                     msg: 'User name "' + data.name + '" already exists.'})
 }
 
 

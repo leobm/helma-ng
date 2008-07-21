@@ -350,7 +350,7 @@ function initStore() {
  */
 var Set = rhino.extendJavaClass(java.util.Set);
 
-Set.prototype.toColl = function (params) {
+Set.prototype.helmatize = function () {
    var item, items = [];
    var arraySet = this.toArray();
 

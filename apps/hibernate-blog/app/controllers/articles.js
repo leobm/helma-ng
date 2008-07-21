@@ -64,7 +64,7 @@ function show_action() {
             (commentsCount == 1) ? res.write(' Comment') : res.write(' Comments');
          },
          listComments: function (macrotag, skin) {
-            var comments = article.comments.toColl();
+            var comments = article.comments.helmatize();
             var comment;
             for (var i in comments) {
                comment = comments[i];

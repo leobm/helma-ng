@@ -38,8 +38,8 @@ function doCreate(data) {
 }
 
 function validateCreate(data) {
-   validatePresenceOf({ value: data.text, msg: 'Text was empty.' });
-   validateLengthOf({ value: data.title, max: 50, msg: 'Title was too long.' })
+   validatePresenceOf(data.text, { msg: 'Text was empty.' });
+   validateLengthOf(data.title, { max: 50, msg: 'Title was too long.' })
 }
 
 
@@ -57,7 +57,7 @@ function doUpdate(data) {
 
 function validateUpdate(data) {
    this.validateCreate(data);
-   validatePresenceOf({ value: data.title, msg: 'Title was empty.' });
+   validatePresenceOf(data.title, { msg: 'Title was empty.' });
 }
 
 

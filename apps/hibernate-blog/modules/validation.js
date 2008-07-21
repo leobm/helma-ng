@@ -1,22 +1,22 @@
-function validatePresenceOf(params) {
-   if (!params.value) {
+function validatePresenceOf(value, params) {
+   if (!value) {
       throw new Error(params.msg);
    }
 }
 
 
-function validateLengthOf(params) {
-   if ( (params.max && (params.value.length > params.max)) ||
-        (params.min && (params.value.length < params.min)) ) {
+function validateLengthOf(value, params) {
+   if ( (params.max && (value.length > params.max)) ||
+        (params.min && (value.length < params.min)) ) {
       throw new Error(params.msg);
    }
 }
 
 
-function validateFormatOf(params) {
-   var evaluation = (params.condition && params.condition == '!match') ?
-                    params.value.match(params.regex) :
-                    !params.value.match(params.regex);
+function validateFormatOf(value, params) {
+   var evaluation = (params.match == 'false') ?
+                    value.match(params.regex) :
+                    !value.match(params.regex);
 
    if (evaluation) {
       throw new Error(params.msg);
@@ -24,8 +24,8 @@ function validateFormatOf(params) {
 }
 
 
-function validateUniquenessOf(params) {
-   var query = 'where ' + params.type.name.substring(0, 1).toLowerCase() + '.' + params.key + " = '" + params.value + "'";
+function validateUniquenessOf(value, params) {
+   var query = 'where ' + params.type.name.substring(0, 1).toLowerCase() + '.' + params.key + " = '" + value + "'";
 
    if (params.type.find(query).size() > 0) {
       throw new Error(params.msg);
