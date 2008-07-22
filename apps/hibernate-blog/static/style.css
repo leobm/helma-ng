@@ -68,7 +68,12 @@ input.submit {
   margin-bottom: 1.5em;
 }
 
-#wmd-container, #add-comment-container {
+#add-comment-container  {
+  width: 40%;
+  min-width: 1000px;
+}
+
+#wmd-container {
   width: 80%;
   min-width: 1000px;
 }
