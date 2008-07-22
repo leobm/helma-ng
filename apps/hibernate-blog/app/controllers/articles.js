@@ -94,8 +94,7 @@ function show_action() {
 
 
 function create_action() {
-   checkAccess('create', session.data.userId &&
-                         userModel.User.get(session.data.userId).isAdmin);
+   checkAccess(this);
    handlePostReq(this);
 
    var context = {
@@ -105,6 +104,11 @@ function create_action() {
    renderView(context);
 }
 
+function checkAccessCreate() {
+   return (session.data.userId &&
+           userModel.User.get(session.data.userId).isAdmin);
+}
+
 function onPostReqCreate() {
    session.data.message = articleModel.doCreate(req.params);
    res.redirect('/');
@@ -112,8 +116,7 @@ function onPostReqCreate() {
 
 
 function edit_action() {
-   checkAccess('edit', session.data.userId &&
-                       userModel.User.get(session.data.userId).isAdmin);
+   checkAccess(this);
    handlePostReq(this);
 
    var article = articleModel.Article.get(req.params.id);
@@ -129,6 +132,10 @@ function edit_action() {
    }
 }
 
+function checkAccessEdit() {
+   return this.checkAccessCreate();
+}
+
 function onPostReqEdit() {
    session.data.message = articleModel.doUpdate(req.params);
    res.redirect('show?id=' + req.params.id);
@@ -136,8 +143,7 @@ function onPostReqEdit() {
 
 
 function delete_action() {
-   checkAccess('delete', session.data.userId &&
-                         userModel.User.get(session.data.userId).isAdmin);
+   checkAccess(this);
    handlePostReq(this);
 
    var article = articleModel.Article.get(req.params.id);
@@ -150,6 +156,10 @@ function delete_action() {
    } else {
       res.redirect('');
    }
+}
+
+function checkAccessDelete() {
+   return this.checkAccessCreate();
 }
 
 function onPostReqDelete() {

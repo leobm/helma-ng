@@ -1,8 +1,10 @@
-function checkAccess(action, condition) {
+function checkAccess(moduleScope) {
    try {
       var path = req.path.split('/');
-      var requestedAction = path[path.length - 1];
-      if ((requestedAction == action) && !(condition)) {
+      var action = path[path.length - 1];
+      var condition = moduleScope['checkAccess' + action.capitalize()]();
+
+      if (!condition) {
          throw new Error('Access denied.');
       }
    } catch (e) {
