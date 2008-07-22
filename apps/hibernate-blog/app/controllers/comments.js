@@ -8,7 +8,7 @@ function create_action() {
    res.redirect('/articles/show?id=' + req.params.articleId + '#addComment');
 }
 
-function onCreatePostReq() {
+function onPostReqCreate() {
    session.data.message = commentModel.doCreate(req.params);
    res.redirect('/articles/show?id=' + req.params.articleId + '#addComment');
 }

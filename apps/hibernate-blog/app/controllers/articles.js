@@ -105,7 +105,7 @@ function create_action() {
    renderView(context);
 }
 
-function onCreatePostReq() {
+function onPostReqCreate() {
    session.data.message = articleModel.doCreate(req.params);
    res.redirect('/');
 }
@@ -129,7 +129,7 @@ function edit_action() {
    }
 }
 
-function onEditPostReq() {
+function onPostReqEdit() {
    session.data.message = articleModel.doUpdate(req.params);
    res.redirect('show?id=' + req.params.id);
 }
@@ -152,7 +152,7 @@ function delete_action() {
    }
 }
 
-function onDeletePostReq() {
+function onPostReqDelete() {
    session.data.message = articleModel.doDelete(req.params.id);
    res.redirect('/');
 }

@@ -10,23 +10,23 @@ function main_action() {
 
 
 function register_action() {
-      handlePostReq(this);
+   handlePostReq(this);
 
-      var context = {
-         adminPrefix: function (macrotag, skin) {
-            checkRender('adminPrefix', skin, userModel.User.all().size() == 0);
-         },
-         websiteUrlInput: function (macrotag, skin) {
-            checkRender('websiteUrlInput', skin, userModel.User.all().size() > 0);
-         },
-         name: req.params.name || '',
-         password: req.params.password || '',
-         websiteUrl: req.params.websiteUrl || ''
-      };
-      renderView(context);
+   var context = {
+      adminPrefix: function (macrotag, skin) {
+         checkRender('adminPrefix', skin, userModel.User.all().size() == 0);
+      },
+      websiteUrlInput: function (macrotag, skin) {
+         checkRender('websiteUrlInput', skin, userModel.User.all().size() > 0);
+      },
+      name: req.params.name || '',
+      password: req.params.password || '',
+      websiteUrl: req.params.websiteUrl || ''
+   };
+   renderView(context);
 }
 
-function onRegisterPostReq() {
+function onPostReqRegister() {
    session.data.message = userModel.doCreate(req.params);
    res.redirect('/');
 }
@@ -46,7 +46,7 @@ function login_action() {
    }
 }
 
-function onLoginPostReq() {
+function onPostReqLogin() {
    session.data.message = userModel.doLogin(req.params);
    res.redirect('/');
 }

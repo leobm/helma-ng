@@ -5,7 +5,7 @@ function handlePostReq(moduleScope) {
    if (req.isPost()) {
       var path = req.path.split('/');
       var action = path[path.length - 1];
-      var onPostRequestFunctionName = 'on' + action.capitalize() + 'PostReq';
+      var onPostRequestFunctionName = 'onPostReq' + action.capitalize();
       try {
          moduleScope[onPostRequestFunctionName]();
       } catch (e) {
