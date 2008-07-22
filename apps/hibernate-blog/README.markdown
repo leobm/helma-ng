@@ -12,11 +12,7 @@ How to Run
 
    hibernate-blog/build/db.sql
 
-2. Put MySQL Connector/J into the Helma NG lib dir, e.g.:
-
-   helma-ng> cp apps/hibernate-blog/build/lib/mysql-connector-java-5.1.6-bin.jar lib/
-
-3. Issue, e.g., the following command in the hibernate-blog directory:
+2. Issue, e.g., the following command in the hibernate-blog directory:
 
    hibernate-blog> java -jar ../../run.jar app modules config
 
@@ -24,7 +20,7 @@ How to Run
 
    helma-ng> java -jar run.jar apps/hibernate-blog/app apps/hibernate-blog/modules apps/hibernate-blog/config
 
-4. Then point your browser to:
+3. Then point your browser to:
 
    http://localhost:8080/
 
