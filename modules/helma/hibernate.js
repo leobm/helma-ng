@@ -318,6 +318,9 @@ function Store() {
                            org.hibernate.criterion.Order.desc(params.orderBy);
                criteria.addOrder(order);
             }
+            if (params.first && (typeof params.first == 'number')) {
+               criteria.setFirstResult(params.first);
+            }
             if (params.max && (typeof params.max == 'number')) {
                criteria.setMaxResults(params.max);
             }
