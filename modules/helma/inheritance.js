@@ -1,5 +1,5 @@
 /**
- * To be used to mixin all instance methods of specified constructor to object.
+ * To be used to mixin all ("public") instance methods of specified constructor to object.
  */
 function mixin(object, constructor) {
    if (!(object instanceof Object) || !(object.constructor instanceof Function)) {
