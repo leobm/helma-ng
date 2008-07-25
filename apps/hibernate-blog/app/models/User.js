@@ -65,3 +65,8 @@ function doLogout() {
       return 'Goodbye!';
    }
 }
+
+
+function getSessionUser() {
+   return User.get(session.data.userId);
+}

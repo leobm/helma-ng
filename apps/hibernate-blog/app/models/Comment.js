@@ -26,7 +26,7 @@ function doCreate(data) {
    this.validateCreate(data);
 
    var props = {
-      creator: userModel.User.get(session.data.userId),
+      creator: userModel.getSessionUser(),
       createTime: new java.util.Date(),
       text: data.text.stripTags(),
    };

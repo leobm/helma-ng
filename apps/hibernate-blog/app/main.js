@@ -26,7 +26,7 @@ function getChecks() {
       areUsersRegistered: (User.all().size() > 0),
       isSessionUser: (session.data.userId ? true : false),
       isSessionUserAdmin: (session.data.userId ? 
-                           User.get(session.data.userId).isAdmin :
+                           getSessionUser().isAdmin :
                            false)
    };
 }

@@ -25,7 +25,7 @@ function main_action() {
          renderSub(macrotag, skin, getChecks().isSessionUser, context);
       },
       sessionUserName: getChecks().isSessionUser ?
-                       userModel.User.get(session.data.userId).name : null,
+                       userModel.getSessionUser().name : null,
       listArticles: function (macrotag, skin) {
          renderList(articles, skin);
       }
@@ -44,8 +44,7 @@ function show_action() {
             renderSub(macrotag, skin, getChecks().isSessionUserAdmin, context);
          },
          listComments: function (macrotag, skin) {
-            var comments = article.comments.helmatize();
-            renderList(comments, skin);
+            renderList(article.comments.helmatize(), skin);
          },
          loginRegisterInfo: function (macrotag, skin) {
             renderSub(macrotag, skin, !getChecks().isSessionUser);
@@ -89,10 +88,7 @@ function edit_action() {
    var article = articleModel.Article.get(req.params.id);
 
    if (article) {
-      var context = {
-         object: article
-      };
-      renderView(context);
+      renderView({ object: article });
    } else {
       res.redirect('');
    }
@@ -115,10 +111,7 @@ function delete_action() {
    var article = articleModel.Article.get(req.params.id);
 
    if (article) {
-      var context = {
-         object: article
-      };
-      renderView(context);
+      renderView({ object: article });
    } else {
       res.redirect('');
    }
