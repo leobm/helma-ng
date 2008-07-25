@@ -11,6 +11,7 @@ function renderView(context, skinName) {
    if (context) {
       context.path = req.path;
       context.message = handleMessage();
+
       if (context.object) {
          this.addObjectPropsToContext(context.object, context)
       }
@@ -24,8 +25,8 @@ function renderView(context, skinName) {
 }
 
 
-function renderList(collection, skin, condition, context) {
-   var item, key, context = {};
+function renderList(collection, skin, condition) {
+   var item, context = {};
 
    if (condition || (condition === undefined)) {
       for (var i in collection) {
@@ -52,9 +53,10 @@ function addObjectPropsToContext(object, context) {
 
    for (var i in object) {
       key = i.startsWith('get') ? (i[3].toLowerCase() + i.substring(4)) : i;
-      if ((i != '$type$') && (i != 'save') && (i != 'remove') &&
-          !(object[i] instanceof  org.hibernate.proxy.map.MapProxy) &&
-          !(object[i] instanceof  java.util.Set)) {
+
+      if ( (i != '$type$') && (i != 'save') && (i != 'remove') &&
+           !(object[i] instanceof org.hibernate.proxy.map.MapProxy) &&
+           !(object[i] instanceof java.util.Set) ) {
          context[key] = (object[i] instanceof Function) ? object[i]() : object[i];
       }
    }
