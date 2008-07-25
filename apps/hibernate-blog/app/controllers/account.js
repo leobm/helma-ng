@@ -22,7 +22,7 @@ function register_action() {
       websiteUrlInput: function (macrotag, skin) {
          renderSub(macrotag, skin, getChecks().areUsersRegistered);
       },
-      websiteUrl: req.params.websiteUrl || '',
+      websiteUrl: req.params.websiteUrl || ''
    };
    renderView(context);
 }
