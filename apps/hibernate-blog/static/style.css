@@ -97,9 +97,9 @@ input.submit {
 }
 
 #wmd-right-container-heading {
-  padding-top: 1.1em;
+  margin-top: 0.4em;
   margin-bottom: 0.5em;
-  margin-left: 22em;
+  margin-left: 1em;
 }
 
 #wmd-label, #add-comment-label {
