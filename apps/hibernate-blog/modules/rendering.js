@@ -48,7 +48,7 @@ function renderSub(macrotag, skin, condition, context) {
 }
 
 
-function addObjectPropsToContext(object, context) {
+var addObjectPropsToContext = function (object, context) {
    var key;
 
    for (var i in object) {
