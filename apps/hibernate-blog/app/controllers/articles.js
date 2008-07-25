@@ -24,7 +24,7 @@ function main_action() {
       logoutLink: function (macrotag, skin, context) {
          renderSub(macrotag, skin, getChecks().isSessionUser, context);
       },
-      sessionUserName: session.data.userId ?
+      sessionUserName: getChecks().isSessionUser ?
                        userModel.User.get(session.data.userId).name : null,
       listArticles: function (macrotag, skin) {
          renderList(articles, skin);
