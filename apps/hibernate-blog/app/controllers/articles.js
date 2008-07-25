@@ -65,8 +65,8 @@ function create_action() {
    handlePostReq(this);
 
    var context = {
-      title: req.params.title || '',
-      text: req.params.text || ''
+      title: req.params.title,
+      text: req.params.text
    };
    renderView(context);
 }

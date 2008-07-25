@@ -17,12 +17,12 @@ function register_action() {
       adminPrefix: function (macrotag, skin) {
          renderSub(macrotag, skin, !getChecks().areUsersRegistered);
       },
-      name: req.params.name || '',
-      password: req.params.password || '',
+      name: req.params.name,
+      password: req.params.password,
       websiteUrlInput: function (macrotag, skin) {
          renderSub(macrotag, skin, getChecks().areUsersRegistered);
       },
-      websiteUrl: req.params.websiteUrl || ''
+      websiteUrl: req.params.websiteUrl
    };
    renderView(context);
 }
@@ -40,8 +40,8 @@ function login_action() {
       handlePostReq(this);
 
       var context = {
-         name: req.params.name || '',
-         password: req.params.password || ''
+         name: req.params.name,
+         password: req.params.password
       };
       renderView(context);
    }
