@@ -6,6 +6,7 @@ function handlePostReq(moduleScope) {
       var path = req.path.split('/');
       var action = path[path.length - 1];
       var onPostRequestFunctionName = 'onPostReq' + action.capitalize();
+
       try {
          moduleScope[onPostRequestFunctionName]();
       } catch (e) {
@@ -17,8 +18,10 @@ function handlePostReq(moduleScope) {
 
 function handleMessage() {
    var message = session.data.message || null;
+
    if (session.data.message) {
       session.data.message = "";
    }
+
    return message;
 }

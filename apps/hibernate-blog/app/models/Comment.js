@@ -1,6 +1,7 @@
 importModule('helma.hibernate', 'db');
 importFromModule('helma.inheritance', 'mixin');
 importFromModule('validation', '*');
+
 importModule('models.Post', 'genericModel');
 importModule('models.Article', 'articleModel');
 importModule('models.User', 'userModel');
@@ -9,6 +10,12 @@ importModule('models.User', 'userModel');
 function Comment(props) {
 
    mixin(this, genericModel.Post);
+
+   this.getCreatorName = function () {
+      return (this.creator.websiteUrl ?
+              ('<a href="' + this.creator.websiteUrl + '">' + this.creator.name + '</a>') :
+              this.creator.name)
+   };
 
    return new db.Storable(this, props);
 }

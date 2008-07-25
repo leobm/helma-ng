@@ -13,13 +13,13 @@
 <div id="article-content">
   <p class="article-meta-container">
     <small>
-      <strong><% creator %></strong> @ <strong><% createTime %></strong><br />
+      <strong><% creatorName %></strong> @ <strong><% formattedCreateTime %></strong><br />
       <% adminTasks %>
     </small>
   </p>
 
   <p>
-    <% text %>
+    <% markdownedText %>
   </p>
 </div>
 
@@ -38,10 +38,10 @@
 </strong>
 
 <% subskin 'commentListItem' %>
-<a name="comment<% commentNumber %>"></a>
+<a name="comment<% itemNumber %>"></a>
 <p>
-  <h3><a href="#comment<% commentNumber %>">#<% commentNumber %></a>: <% commentCreator %> @ <% commentCreateTime %></h3>
-  <% commentText %>
+  <h3><a href="#comment<% itemNumber %>">#<% itemNumber %></a>: <% creatorName %> @ <% formattedCreateTime %></h3>
+  <% markdownedText %>
 </p>
 
 <% subskin 'loginRegisterInfo' %>

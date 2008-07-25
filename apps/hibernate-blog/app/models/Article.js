@@ -2,6 +2,7 @@ importModule('typeExtensions');
 importModule('helma.hibernate', 'db');
 importFromModule('helma.inheritance', 'mixin');
 importFromModule('validation', '*');
+
 importModule('models.Post', 'genericModel');
 importModule('models.User', 'userModel');
 
@@ -13,7 +14,14 @@ function Article(props) {
 
    this.getTeaserText = function () {
       return this.getMarkdownedText().stripTags().head(250, ' ...');
-   }
+   };
+
+   this.getCommentsCountMsg = function () {
+      var commentsCount = this.comments.size();
+
+      return (commentsCount == 1) ? (commentsCount + ' comment') :
+             (commentsCount + ' comments');
+   };
 
    return new db.Storable(this, props);
 }

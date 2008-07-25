@@ -14,7 +14,7 @@
 </div>
 
 <div id="articles">
-  <% list %>
+  <% listArticles %>
 </div>
 
 <% subskin 'loginLink' %>
@@ -29,23 +29,23 @@
 <% subskin 'logoutLink' %>
 <strong><a href="/account/logout">&raquo; Logout</a></strong>
 
-<% subskin 'listItem' %>
+<% subskin 'articleListItem' %>
 <div class="article-list-item">
 
   <div class="article-heading-container">
     <h2 class="article-heading">
-      <a href="<% href %>"><% title %></a>
+      <a href="show?id=<% id %>"><% title %></a>
     </h2>
 
     <p class="article-meta-container">
       <small>
-        <strong><% creator %></strong> @ <strong><% createTime %></strong><br />
-        <a href="<% href %>#comments"><% commentsCountMsg %></a>
+        <strong><% creatorName %></strong> @ <strong><% formattedCreateTime %></strong><br />
+        <a href="show?id=<% id %>#comments"><% commentsCountMsg %></a>
       </small>
     </p>
   </div>
 
   <p class="article-text">
-    <% text %>
+    <% markdownedText %>
   </p>
 </div>

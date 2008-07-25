@@ -21,6 +21,17 @@ function main() {
 }
 
 
+function getChecks() {
+   return {
+      areUsersRegistered: (User.all().size() > 0),
+      isSessionUser: (session.data.userId ? true : false),
+      isSessionUserAdmin: (session.data.userId ? 
+                           User.get(session.data.userId).isAdmin :
+                           false)
+   };
+}
+
+
 function main_action() {
    if (User.all().size() == 0) {
       res.redirect('account');

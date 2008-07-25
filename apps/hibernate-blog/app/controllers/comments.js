@@ -1,5 +1,7 @@
-importFromModule('formHandling', 'handlePostReq');
+importFromModule('main', 'getChecks');
 importFromModule('security', 'checkAccess');
+importFromModule('formHandling', 'handlePostReq');
+
 importModule('models.Comment', 'commentModel');
 
 
@@ -11,7 +13,7 @@ function create_action() {
 }
 
 function checkAccessCreate() {
-   return session.data.userId;
+   return getChecks().isSessionUser;
 }
 
 function onPostReqCreate() {

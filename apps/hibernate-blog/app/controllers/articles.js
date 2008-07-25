@@ -1,43 +1,31 @@
+importFromModule('main', 'getChecks');
+importFromModule('security', '*');
 importFromModule('rendering', '*');
 importFromModule('formHandling', 'handlePostReq');
-importFromModule('security', '*');
 importModule('typeExtensions');
+
 importModule('models.Article', 'articleModel');
 importModule('models.User', 'userModel');
 
 
 function main_action() {
    var articles = articleModel.Article.list({ orderBy: 'createTime' });
+
    var context = {
       loginLink: function (macrotag, skin) {
-         checkRender('loginLink', skin, !session.data.userId);
+         renderSub(macrotag, skin, !getChecks().isSessionUser);
       },
       registerLink: function (macrotag, skin) {
-         checkRender('registerLink', skin, !session.data.userId);
+         renderSub(macrotag, skin, !getChecks().isSessionUser);
       },
       createArticleLink: function (macrotag, skin) {
-         checkRender('createArticleLink', skin, session.data.userId &&
-                                                userModel.User.get(session.data.userId).isAdmin);
+         renderSub(macrotag, skin, getChecks().isSessionUserAdmin);
       },
       logoutLink: function (macrotag, skin) {
-         checkRender('logoutLink', skin, session.data.userId);
+         renderSub(macrotag, skin, getChecks().isSessionUser);
       },
-      list: function (macrotag, skin, context) {
-         var article;
-         for (var i in articles) {
-            article = articles[i];
-            context.commentsCountMsg = function () {
-               var commentsCount = article.comments.size();
-               res.write(commentsCount);
-               (commentsCount == 1) ? res.write(' comment') : res.write(' comments');
-            };
-            context.href = 'show?id=' + article.id;
-            context.title = article.title;
-            context.text = article.getTeaserText();
-            context.createTime = article.getFormattedCreateTime();
-            context.creator = article.getCreatorName();
-            skin.renderSubskin('listItem', context);
-         }
+      listArticles: function (macrotag, skin) {
+         renderList(articles, skin);
       }
    };
    renderView(context);
@@ -46,44 +34,22 @@ function main_action() {
 
 function show_action() {
    var article = articleModel.Article.get(req.params.id);
+
    if (article) {
       var context = {
-         title: article.title,
-         text: article.getMarkdownedText(),
-         createTime: article.getFormattedCreateTime(),
-         creator: article.getCreatorName(),
-         id: req.params.id,
+         object: article,
          adminTasks: function (macrotag, skin, context) {
-            checkRender('adminTasks', skin,
-                        session.data.userId && userModel.User.get(session.data.userId).isAdmin,
-                        context);
-         },
-         commentsCountMsg: function () {
-            var commentsCount = article.comments.size();
-            res.write(commentsCount);
-            (commentsCount == 1) ? res.write(' Comment') : res.write(' Comments');
+            renderSub(macrotag, skin, getChecks().isSessionUserAdmin, context);
          },
          listComments: function (macrotag, skin) {
             var comments = article.comments.helmatize();
-            var comment;
-            for (var i in comments) {
-               comment = comments[i];
-               var subskinContext = {
-                  commentNumber: parseInt(i) + 1,
-                  commentCreator: comment.creator.websiteUrl ?
-                                  '<a href="' + comment.creator.websiteUrl + '">' + comment.getCreatorName() + '</a>' :
-                                  comment.getCreatorName(),
-                  commentCreateTime: comment.getFormattedCreateTime(),
-                  commentText: comment.getMarkdownedText()
-               };
-               skin.renderSubskin('commentListItem', subskinContext);
-            }
+            renderList(comments, skin);
          },
-         loginRegisterInfo: function (macrotag, skin, context) {
-            checkRender('loginRegisterInfo', skin, !session.data.userId);
+         loginRegisterInfo: function (macrotag, skin) {
+            renderSub(macrotag, skin, !getChecks().isSessionUser);
          },
          addCommentForm: function (macrotag, skin, context) {
-            checkRender('addCommentForm', skin, session.data.userId, context);
+            renderSub(macrotag, skin, getChecks().isSessionUser, context);
          }
       };
       renderView(context);
@@ -105,8 +71,7 @@ function create_action() {
 }
 
 function checkAccessCreate() {
-   return (session.data.userId &&
-           userModel.User.get(session.data.userId).isAdmin);
+   return getChecks().isSessionUserAdmin;
 }
 
 function onPostReqCreate() {
@@ -120,11 +85,10 @@ function edit_action() {
    handlePostReq(this);
 
    var article = articleModel.Article.get(req.params.id);
+
    if (article) {
       var context = {
-         id: article.id,
-         title: article.title,
-         text: article.text
+         object: article
       };
       renderView(context);
    } else {
@@ -147,10 +111,10 @@ function delete_action() {
    handlePostReq(this);
 
    var article = articleModel.Article.get(req.params.id);
+
    if (article) {
       var context = {
-         id: article.id,
-         title: article.title
+         object: article
       };
       renderView(context);
    } else {

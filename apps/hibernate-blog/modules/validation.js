@@ -25,7 +25,8 @@ function validateFormatOf(value, params) {
 
 
 function validateUniquenessOf(value, params) {
-   var query = 'where ' + params.type.name.substring(0, 1).toLowerCase() + '.' + params.key + " = '" + value + "'";
+   var query = 'where ' + params.type.name.substring(0, 1).toLowerCase() +
+               '.' + params.key + " = '" + value + "'";
 
    if (params.type.find(query).size() > 0) {
       throw new Error(params.msg);

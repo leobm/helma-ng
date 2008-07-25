@@ -1,6 +1,7 @@
+importFromModule('main', 'getChecks');
 importFromModule('rendering', '*');
 importFromModule('formHandling', 'handlePostReq');
-importFromModule('security', 'checkRender');
+
 importModule('models.User', 'userModel');
 
 
@@ -14,14 +15,14 @@ function register_action() {
 
    var context = {
       adminPrefix: function (macrotag, skin) {
-         checkRender('adminPrefix', skin, userModel.User.all().size() == 0);
-      },
-      websiteUrlInput: function (macrotag, skin) {
-         checkRender('websiteUrlInput', skin, userModel.User.all().size() > 0);
+         renderSub(macrotag, skin, !getChecks().areUsersRegistered);
       },
       name: req.params.name || '',
       password: req.params.password || '',
-      websiteUrl: req.params.websiteUrl || ''
+      websiteUrlInput: function (macrotag, skin) {
+         renderSub(macrotag, skin, getChecks().areUsersRegistered);
+      },
+      websiteUrl: req.params.websiteUrl || '',
    };
    renderView(context);
 }

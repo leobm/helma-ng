@@ -7,9 +7,13 @@ function renderView(context, skinName) {
    var path = req.path.substring(1).split('/');
    var controller = path[path.length - 2] || 'main';
    var action = path[path.length - 1] || 'main';
+
    if (context) {
       context.path = req.path;
       context.message = handleMessage();
+      if (context.object) {
+         this.addObjectPropsToContext(context.object, context)
+      }
    } else {
       var context = {
          path: req.path,
@@ -17,4 +21,41 @@ function renderView(context, skinName) {
       };
    }
    render('views/' + controller + '/' + (skinName || action) + '.html', context);
+}
+
+
+function renderList(collection, skin, condition, context) {
+   var item, key, context = {};
+
+   if (condition || (condition === undefined)) {
+      for (var i in collection) {
+         item = collection[i];
+         context.itemIndex = i;
+         context.itemNumber = parseInt(i) + 1;
+         this.addObjectPropsToContext(item, context);
+
+         skin.renderSubskin(item.$type$.toLowerCase() + 'ListItem', context);
+      }
+   }
+}
+
+
+function renderSub(macrotag, skin, condition, context) {
+   if (condition || (condition === undefined)) {
+      skin.renderSubskin(macrotag.name, context);
+   }
+}
+
+
+function addObjectPropsToContext(object, context) {
+   var key;
+
+   for (var i in object) {
+      key = i.startsWith('get') ? (i[3].toLowerCase() + i.substring(4)) : i;
+      if ((i != '$type$') && (i != 'save') && (i != 'remove') &&
+          !(object[i] instanceof  org.hibernate.proxy.map.MapProxy) &&
+          !(object[i] instanceof  java.util.Set)) {
+         context[key] = (object[i] instanceof Function) ? object[i]() : object[i];
+      }
+   }
 }

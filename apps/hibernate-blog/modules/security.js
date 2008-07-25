@@ -12,10 +12,3 @@ function checkAccess(moduleScope) {
       res.redirect('/account/login');
    }
 }
-
-
-function checkRender(subskinName, skin, condition, context) {
-   if (condition) {
-      skin.renderSubskin(subskinName, context);
-   }
-}

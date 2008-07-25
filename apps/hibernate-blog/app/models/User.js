@@ -16,7 +16,8 @@ function doCreate(data) {
       createTime: new java.util.Date(),
       name: data.name,
       password: data.password.md5(),
-      websiteUrl: (data.websiteUrl && !data.websiteUrl.startsWith('http://') && !data.websiteUrl.startsWith('https://')) ?
+      websiteUrl: (data.websiteUrl && !data.websiteUrl.startsWith('http://') &&
+                   !data.websiteUrl.startsWith('https://')) ?
                   'http://' + data.websiteUrl : data.websiteUrl || null,
       isAdmin: (User.all().size() == 0) ? true : false
    };
@@ -39,7 +40,8 @@ function validateCreate(data) {
 
 
 function doLogin(data) {
-   var userQuery = "where u.name = '" + data.name + "' and u.password = '" + data.password.md5() + "'";
+   var userQuery = "where u.name = '" + data.name + "' and u.password = '" +
+                   data.password.md5() + "'";
    var userQueryResult = User.find(userQuery);
 
    if (userQueryResult[0] && (userQueryResult[0].id == session.data.userId)) {
@@ -48,7 +50,7 @@ function doLogin(data) {
       session.data.userId = userQueryResult[0].id;
       return 'Hello ' + userQueryResult[0].name + '!';
    } else {
-      throw new Error('Login failed.');
+      throw new Error('Login failed. Try again?');
    }
 }
 
