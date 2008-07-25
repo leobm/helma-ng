@@ -18,9 +18,7 @@
     </small>
   </p>
 
-  <p>
-    <% markdownedText %>
-  </p>
+  <% markdownedText %>
 </div>
 
 <a name="comments"></a>
@@ -39,10 +37,8 @@
 
 <% subskin 'commentListItem' %>
 <a name="comment<% itemNumber %>"></a>
-<p>
-  <h3><a href="#comment<% itemNumber %>">#<% itemNumber %></a>: <% creatorName %> @ <% formattedCreateTime %></h3>
-  <% markdownedText %>
-</p>
+<h3><a href="#comment<% itemNumber %>">#<% itemNumber %></a>: <% creatorName %> @ <% formattedCreateTime %></h3>
+<% markdownedText %>
 
 <% subskin 'loginRegisterInfo' %>
 <a name="addComment"></a>

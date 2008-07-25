@@ -21,9 +21,10 @@ function main_action() {
       createArticleLink: function (macrotag, skin) {
          renderSub(macrotag, skin, getChecks().isSessionUserAdmin);
       },
-      logoutLink: function (macrotag, skin) {
-         renderSub(macrotag, skin, getChecks().isSessionUser);
+      logoutLink: function (macrotag, skin, context) {
+         renderSub(macrotag, skin, getChecks().isSessionUser, context);
       },
+      sessionUserName: session.data.userId ? userModel.User.get(session.data.userId).name : null,
       listArticles: function (macrotag, skin) {
          renderList(articles, skin);
       }

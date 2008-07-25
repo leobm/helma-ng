@@ -27,7 +27,7 @@
 <strong><a href="create">&raquo; Create a new article</a>&nbsp;&nbsp;|&nbsp;</strong>
 
 <% subskin 'logoutLink' %>
-<strong><a href="/account/logout">&raquo; Logout</a></strong>
+<strong><a href="/account/logout">&raquo; Logout <small><em><% sessionUserName %></em></small></a></strong>
 
 <% subskin 'articleListItem' %>
 <div class="article-list-item">
@@ -45,7 +45,7 @@
     </p>
   </div>
 
-  <p class="article-text">
+  <div class="article-text">
     <% markdownedText %>
-  </p>
+  </div>
 </div>
