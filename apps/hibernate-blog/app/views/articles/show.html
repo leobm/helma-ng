@@ -10,25 +10,27 @@
   </div>
 </div>
 
-<div id="article-content">
-  <p class="article-meta-container">
-    <small>
-      <strong><% creatorName %></strong> @ <strong><% formattedCreateTime %></strong><br />
-      <% adminTasks %>
-    </small>
-  </p>
+<div id="main-content">
+  <div id="article-content">
+    <p class="article-meta-container">
+      <small>
+        <strong><% creatorName %></strong> @ <strong><% formattedCreateTime %></strong><br />
+        <% adminTasks %>
+      </small>
+    </p>
 
-  <% markdownedText %>
+    <% markdownedText %>
+  </div>
+
+  <a name="comments"></a>
+  <h2><% commentsCountMsg %>&nbsp;&nbsp;<small><em><a href="<% href %>#addComment">Add &darr;</a></em></small></h2>
+  <div id="commentsContainer">
+    <% listComments %>
+  </div>
+
+  <% loginRegisterInfo %>
+  <% addCommentForm %>
 </div>
-
-<a name="comments"></a>
-<h2><% commentsCountMsg %>&nbsp;&nbsp;<small><em><a href="<% href %>#addComment">Add &darr;</a></em></small></h2>
-<div id="commentsContainer">
-  <% listComments %>
-</div>
-
-<% loginRegisterInfo %>
-<% addCommentForm %>
 
 <% subskin 'adminTasks' %>
 <strong>

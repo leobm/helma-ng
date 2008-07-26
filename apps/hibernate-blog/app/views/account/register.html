@@ -6,24 +6,26 @@
   </div>
 </div>
 
-<form action="" method="post" accept-charset="utf-8">
-  <p>
-    <label for="name">Name:</label><br />
-    <input type="text" name="name" id="name" size="30" value="<% name %>" />
-  </p>
-  <p>
-    <label for="password">Password:</label><br />
-    <input type="password" name="password" id="password" size="30" value="<% password %>" />
-  </p>
-  <% websiteUrlInput %>
+<div id="main-content">
+  <form action="" method="post" accept-charset="utf-8">
+    <p>
+      <label for="name">Name:</label><br />
+      <input type="text" name="name" id="name" size="30" value="<% name %>" />
+    </p>
+    <p>
+      <label for="password">Password:</label><br />
+      <input type="password" name="password" id="password" size="30" value="<% password %>" />
+    </p>
+    <% websiteUrlInput %>
 
-  <p>
-    <strong>
-      <a href="/">&larr; Cancel</a>&nbsp;
-    </strong>
-    <input type="submit" name="save" class="submit" value="Register" />
-  </p>
-</form>
+    <p>
+      <strong>
+        <a href="/">&larr; Cancel</a>&nbsp;
+      </strong>
+      <input type="submit" name="save" class="submit" value="Register" />
+    </p>
+  </form>
+</div>
 
 <% subskin 'adminPrefix' %>
 Admin

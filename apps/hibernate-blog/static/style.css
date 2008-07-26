@@ -130,16 +130,20 @@ input.submit {
   padding: 4px 10px 4px 10px;
 }
 
-.article-list-item, #article-content {
-  background-color: #EEE;
-  padding: 0.5em 2em 1em 2em;
-  margin-top: 2em;
+#articles, #main-content {
+  width: 70%;
+  margin: auto;
+}
+
+#main-content {
+  margin-top: 1.7em;
   margin-bottom: 2em;
 }
 
-#article-content {
-  margin-top: 0;
-  margin-bottom: 0;
+.article-list-item, #article-content {
+  background-color: #EEE;
+  padding: 0.5em 2em 1em 2em;
+  margin-bottom: 2em;
 }
 
 .article-heading-container {
