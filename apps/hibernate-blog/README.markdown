@@ -12,7 +12,10 @@ How to Run
 
    hibernate-blog/build/db.sql
 
-2. Issue, e.g., the following command in the hibernate-blog directory:
+2. Put the jars (needed to make feeds work) in hibernate-blog/build/extra
+   into helma-ng/lib (e.g. into a new dir called ext there).
+
+3. Issue, e.g., the following command in the hibernate-blog directory:
 
    hibernate-blog> java -jar ../../run.jar app modules config
 
@@ -20,7 +23,7 @@ How to Run
 
    helma-ng> java -jar run.jar apps/hibernate-blog/app apps/hibernate-blog/modules apps/hibernate-blog/config
 
-3. Then point your browser to:
+4. Then point your browser to:
 
    http://localhost:8080/
 

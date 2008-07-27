@@ -37,7 +37,7 @@ this.initStore();
 (function () {
 
    var isConfigured = false;
-   var config, sessionFactory;
+   var config, sessionFactory, sess, txn;
 
 
    /**
@@ -46,15 +46,19 @@ this.initStore();
     * call this in the main function of an app.
     */
    this.addTxnCallbacks = function () {
-      var txn;
 
       rhino.addCallback('onRequest', 'beginHibernateTxn', function () {
-         var sess = getSession();
+         sess = getSession();
+         sess.setFlushMode(org.hibernate.FlushMode.MANUAL);
+         org.hibernate.context.ManagedSessionContext.bind(sess);
          txn = sess.beginTransaction();
       });
 
       rhino.addCallback('onResponse', 'commitHibernateTxn', function () {
+         org.hibernate.context.ManagedSessionContext.unbind(sessionFactory);
+         sess.flush();
          txn.commit();
+         sess.close();
       });
    };
 
@@ -67,7 +71,7 @@ this.initStore();
          setConfig();
       }
 
-      return sessionFactory.getCurrentSession();
+      return sessionFactory.openSession();
    };
 
 
@@ -94,8 +98,8 @@ this.initStore();
       config.setProperty('hibernate.default_entity_mode', 'dynamic-map');
       // transactions are handled by JDBC, no JTA is used
       config.setProperty('hibernate.transaction.factory_class', 'org.hibernate.transaction.JDBCTransactionFactory');
-      // bind session to thread context
-      config.setProperty('hibernate.current_session_context_class', 'thread');
+      // enable session binding to managed context
+      config.setProperty('hibernate.current_session_context_class', 'managed');
       // enable the second level cache
       config.setProperty('hibernate.cache.use_second_level_cache', 'true');
       config.setProperty('hibernate.cache.use_query_cache', 'true');
@@ -107,6 +111,65 @@ this.initStore();
       sessionFactory = config.buildSessionFactory();
 
       return;
+   };
+
+
+   /**
+    * Template taking care of executing the actual Hibernate session API wrapper method operations.
+    */
+   this.getHibernateTemplate = function (method, params) {
+      // do the actual operation
+      switch (method) {
+         case 'save':
+            sess['saveOrUpdate(java.lang.String,java.lang.Object)'](params.object.$type$, params.object);
+            break;
+         case 'remove':
+            sess['delete(java.lang.Object)'](params.object);
+            break;
+         case 'get':
+            var result = sess.get(new java.lang.String(params.type), new java.lang.Long(params.id));
+            if (result != null) {
+               result = this.addInstanceMethods(new ScriptableMap(result));
+            }
+            break;
+         case 'find':
+            var result = new ScriptableList(sess.find(new java.lang.String(params.query)));
+            for (var i in result) {
+               result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
+            }
+            break;
+         case 'getAll':
+            var result = new ScriptableList(sess.find(new java.lang.String('from ' + params.type)));
+            for (var i in result) {
+               result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
+            }
+            break;
+         case 'list':
+            var criteria = sess['createCriteria(java.lang.String)'](params.type);
+            criteria.setCacheable(true);
+            if (params.orderBy) {
+               var order = (params.order == 'asc') ?
+                           org.hibernate.criterion.Order.asc(params.orderBy) :
+                           org.hibernate.criterion.Order.desc(params.orderBy);
+               criteria.addOrder(order);
+            }
+            if (params.first && (typeof params.first == 'number')) {
+               criteria.setFirstResult(params.first);
+            }
+            if (params.max && (typeof params.max == 'number')) {
+               criteria.setMaxResults(params.max);
+            }
+
+            var result = new ScriptableList(criteria.list());
+            for (var i in result) {
+               result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
+            }
+            break;
+         default:
+            break;
+      }
+
+      return result || null;
    };
 
 
@@ -194,7 +257,6 @@ function Storable(object, properties) {
  * To be used for installing DAO functionality methods on model constructors and
  * registering types for being able to decorate corresponding model objects with
  * resp. instance methods when fetched from DB.
- * Furthermore, implementation of Hibernate session API wrapper.
  */
 function Store() {
    var typeRegistry = {};
@@ -273,68 +335,6 @@ function Store() {
          log.error('in "list": ' + e.toString());
          return;
       }
-   };
-
-
-   /**
-    * Template taking care of configuration, session & transaction management
-    * plus executing the actual Hibernate session API wrapper method operations.
-    */
-   var getHibernateTemplate = function (method, params) {
-      var sess = getSession();
-
-      // do the actual operation
-      switch (method) {
-         case 'save':
-            sess['saveOrUpdate(java.lang.String,java.lang.Object)'](params.object.$type$, params.object);
-            break;
-         case 'remove':
-            sess['delete(java.lang.Object)'](params.object);
-            break;
-         case 'get':
-            var result = sess.get(new java.lang.String(params.type), new java.lang.Long(params.id));
-            if (result != null) {
-               result = this.addInstanceMethods(new ScriptableMap(result));
-            }
-            break;
-         case 'find':
-            var result = new ScriptableList(sess.find(new java.lang.String(params.query)));
-            for (var i in result) {
-               result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
-            }
-            break;
-         case 'getAll':
-            var result = new ScriptableList(sess.find(new java.lang.String('from ' + params.type)));
-            for (var i in result) {
-               result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
-            }
-            break;
-         case 'list':
-            var criteria = sess['createCriteria(java.lang.String)'](params.type);
-            criteria.setCacheable(true);
-            if (params.orderBy) {
-               var order = (params.order == 'asc') ?
-                           org.hibernate.criterion.Order.asc(params.orderBy) :
-                           org.hibernate.criterion.Order.desc(params.orderBy);
-               criteria.addOrder(order);
-            }
-            if (params.first && (typeof params.first == 'number')) {
-               criteria.setFirstResult(params.first);
-            }
-            if (params.max && (typeof params.max == 'number')) {
-               criteria.setMaxResults(params.max);
-            }
-
-            var result = new ScriptableList(criteria.list());
-            for (var i in result) {
-               result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
-            }
-            break;
-         default:
-            break;
-      }
-
-      return result || null;
    };
 
 }

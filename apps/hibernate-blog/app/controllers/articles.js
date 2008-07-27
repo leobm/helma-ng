@@ -125,3 +125,9 @@ function onPostReqDelete() {
    session.data.message = articleModel.doDelete(req.params.id);
    res.redirect('/');
 }
+
+
+function atom_xml_action() {
+   res.contentType = 'application/atom+xml';
+   res.write(articleModel.getFeed('atom_0.3'));
+}

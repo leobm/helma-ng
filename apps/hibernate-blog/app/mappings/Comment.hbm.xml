@@ -13,6 +13,10 @@
             <generator class="native" />
         </id>
 
+        <property name="articleTargetId"
+            column="COMMENT_F_ARTICLE_TARGET_ID"
+            type="long" />
+
         <property name="text"
             column="COMMENT_TEXT"
             type="text"

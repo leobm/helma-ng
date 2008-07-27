@@ -5,6 +5,11 @@ importFromModule('formHandling', 'handlePostReq');
 importModule('models.Comment', 'commentModel');
 
 
+function main_action() {
+   res.redirect('/');
+}
+
+
 function create_action() {
    checkAccess(this);
    handlePostReq(this);

@@ -375,12 +375,22 @@ String.prototype.md5 = function() {
 
 
 /**
- * function processes a string according to Markdown syntax spec.
+ * function processes a string according to Markdown syntax spec
+ * @return String Markdown processed string
  */
 String.prototype.processMarkdown = function () {
    var processor = new org.helma.util.MarkdownProcessor(this);
    return processor.process();
 };
+
+
+/**
+ * function converts HTML special characters to their entity equivalents
+ * @return String HTML escaped string
+ */
+String.prototype.escapeHtml = function () {
+   return this.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 
 /**

@@ -75,3 +75,37 @@ function doDelete(id) {
 
    return 'Article "' + article.title + '" was deleted successfully.';
 }
+
+
+function getFeed(feedType) {
+   var articles = Article.list({ max: 10, orderBy: 'createTime'});
+
+   var feed = new com.sun.syndication.feed.synd.SyndFeedImpl();
+   feed.setFeedType(feedType);
+
+   feed.setTitle('Hibernate Blog NG - Articles');
+   feed.setLink('/');
+   feed.setDescription('powered by Helma NG, Hibernate and ROME');
+
+   var entry, entries = new java.util.ArrayList();
+
+   for (var i in articles) {
+      entry = new com.sun.syndication.feed.synd.SyndEntryImpl();
+      entry.setTitle(articles[i].title);
+      entry.setLink('show?id=' + articles[i].id);
+      entry.setPublishedDate(articles[i].createTime);
+
+      var description = new com.sun.syndication.feed.synd.SyndContentImpl();
+      description.setType('text/html');
+      description.setValue(articles[i].getMarkdownedText());
+      entry.setDescription(description);
+
+      entries.add(entry);
+   }
+
+   feed.setEntries(entries);
+
+   var syndFeedOutput = new com.sun.syndication.io.SyndFeedOutput();
+
+   return syndFeedOutput.outputString(feed);
+}
