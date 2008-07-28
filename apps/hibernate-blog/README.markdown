@@ -12,8 +12,8 @@ How to Run
 
    hibernate-blog/build/db.sql
 
-2. Put the jars (needed to make feeds work) in hibernate-blog/build/extra
-   into helma-ng/lib (e.g. into a new dir called ext there).
+2. Put the jars (needed to make feeds work) located in
+   hibernate-blog/build/extra into helma-ng/lib/ext.
 
 3. Issue, e.g., the following command in the hibernate-blog directory:
 
