@@ -37,28 +37,20 @@ this.initStore();
 (function () {
 
    var isConfigured = false;
-   var config, sessionFactory, sess, txn;
+   var config, sessionFactory;
 
 
    /**
-    * Adds Rhino callbacks for binding Hibernate
+    * Adds Rhino callback for binding Hibernate
     * DB session transactions to request scope;
     * call this in the main function of an app.
     */
-   this.addTxnCallbacks = function () {
-
-      rhino.addCallback('onRequest', 'beginHibernateTxn', function () {
-         sess = getSession();
-         sess.setFlushMode(org.hibernate.FlushMode.MANUAL);
-         org.hibernate.context.ManagedSessionContext.bind(sess);
-         txn = sess.beginTransaction();
-      });
+   this.addTxnCallback = function () {
 
       rhino.addCallback('onResponse', 'commitHibernateTxn', function () {
-         org.hibernate.context.ManagedSessionContext.unbind(sessionFactory);
-         sess.flush();
+         var sess = sessionFactory.getCurrentSession();
+         var txn = sess.getTransaction();
          txn.commit();
-         sess.close();
       });
    };
 
@@ -71,7 +63,9 @@ this.initStore();
          setConfig();
       }
 
-      return sessionFactory.openSession();
+      var sess = sessionFactory.getCurrentSession();
+      sess.beginTransaction();
+      return sess;
    };
 
 
@@ -99,7 +93,7 @@ this.initStore();
       // transactions are handled by JDBC, no JTA is used
       config.setProperty('hibernate.transaction.factory_class', 'org.hibernate.transaction.JDBCTransactionFactory');
       // enable session binding to managed context
-      config.setProperty('hibernate.current_session_context_class', 'managed');
+      config.setProperty('hibernate.current_session_context_class', 'thread');
       // enable the second level cache
       config.setProperty('hibernate.cache.use_second_level_cache', 'true');
       config.setProperty('hibernate.cache.use_query_cache', 'true');
@@ -118,6 +112,8 @@ this.initStore();
     * Template taking care of executing the actual Hibernate session API wrapper method operations.
     */
    this.getHibernateTemplate = function (method, params) {
+      var sess = this.getSession();
+
       // do the actual operation
       switch (method) {
          case 'save':

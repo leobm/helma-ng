@@ -25,3 +25,9 @@ function onPostReqCreate() {
    session.data.message = commentModel.doCreate(req.params);
    res.redirect('/articles/show?id=' + req.params.articleId + '#addComment');
 }
+
+
+function atom_xml_action() {
+   res.contentType = 'application/atom+xml';
+   res.write(commentModel.getFeed('atom_0.3'));
+}
