@@ -13,7 +13,7 @@ function Article(props) {
    mixin(this, genericModel.Post);
 
    this.getTeaserText = function () {
-      return this.getMarkdownedText().stripTags().head(250, ' ...');
+      return this.getMarkdownedText().stripTags().trim().head(250, ' ...');
    };
 
    this.getCommentsCountMsg = function () {
