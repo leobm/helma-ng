@@ -102,70 +102,10 @@ this.initStore();
 
       isConfigured = true;
       log.info('Configuration set.');
+
       sessionFactory = config.buildSessionFactory();
 
       return;
-   };
-
-
-   /**
-    * Template taking care of executing the actual Hibernate session API wrapper method operations.
-    */
-   this.getHibernateTemplate = function (method, params) {
-      var sess = this.getSession();
-
-      // do the actual operation
-      switch (method) {
-         case 'save':
-            sess['saveOrUpdate(java.lang.String,java.lang.Object)'](params.object.$type$, params.object);
-            break;
-         case 'remove':
-            sess['delete(java.lang.Object)'](params.object);
-            break;
-         case 'get':
-            var result = sess.get(new java.lang.String(params.type), new java.lang.Long(params.id));
-            if (result != null) {
-               result = this.addInstanceMethods(new ScriptableMap(result));
-            }
-            break;
-         case 'find':
-            var result = new ScriptableList(sess.find(new java.lang.String(params.query)));
-            for (var i in result) {
-               result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
-            }
-            break;
-         case 'getAll':
-            var result = new ScriptableList(sess.find(new java.lang.String('from ' + params.type)));
-            for (var i in result) {
-               result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
-            }
-            break;
-         case 'list':
-            var criteria = sess['createCriteria(java.lang.String)'](params.type);
-            criteria.setCacheable(true);
-            if (params.orderBy) {
-               var order = (params.order == 'asc') ?
-                           org.hibernate.criterion.Order.asc(params.orderBy) :
-                           org.hibernate.criterion.Order.desc(params.orderBy);
-               criteria.addOrder(order);
-            }
-            if (params.first && (typeof params.first == 'number')) {
-               criteria.setFirstResult(params.first);
-            }
-            if (params.max && (typeof params.max == 'number')) {
-               criteria.setMaxResults(params.max);
-            }
-
-            var result = new ScriptableList(criteria.list());
-            for (var i in result) {
-               result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
-            }
-            break;
-         default:
-            break;
-      }
-
-      return result || null;
    };
 
 
@@ -331,6 +271,67 @@ function Store() {
          log.error('in "list": ' + e.toString());
          return;
       }
+   };
+
+
+   /**
+    * Template taking care of executing the actual Hibernate session API wrapper method operations.
+    */
+   var getHibernateTemplate = function (method, params) {
+      var sess = getSession();
+
+      // do the actual operation
+      switch (method) {
+         case 'save':
+            sess['saveOrUpdate(java.lang.String,java.lang.Object)'](params.object.$type$, params.object);
+            break;
+         case 'remove':
+            sess['delete(java.lang.Object)'](params.object);
+            break;
+         case 'get':
+            var result = sess.get(new java.lang.String(params.type), new java.lang.Long(params.id));
+            if (result != null) {
+               result = this.addInstanceMethods(new ScriptableMap(result));
+            }
+            break;
+         case 'find':
+            var result = new ScriptableList(sess.find(new java.lang.String(params.query)));
+            for (var i in result) {
+               result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
+            }
+            break;
+         case 'getAll':
+            var result = new ScriptableList(sess.find(new java.lang.String('from ' + params.type)));
+            for (var i in result) {
+               result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
+            }
+            break;
+         case 'list':
+            var criteria = sess['createCriteria(java.lang.String)'](params.type);
+            criteria.setCacheable(true);
+            if (params.orderBy) {
+               var order = (params.order == 'asc') ?
+                           org.hibernate.criterion.Order.asc(params.orderBy) :
+                           org.hibernate.criterion.Order.desc(params.orderBy);
+               criteria.addOrder(order);
+            }
+            if (params.first && (typeof params.first == 'number')) {
+               criteria.setFirstResult(params.first);
+            }
+            if (params.max && (typeof params.max == 'number')) {
+               criteria.setMaxResults(params.max);
+            }
+
+            var result = new ScriptableList(criteria.list());
+            for (var i in result) {
+               result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
+            }
+            break;
+         default:
+            break;
+      }
+
+      return result || null;
    };
 
 }
