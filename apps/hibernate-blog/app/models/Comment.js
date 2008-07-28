@@ -21,7 +21,7 @@ function Comment(props) {
       var articleTarget = articleModel.Article.get(this.articleTargetId);
 
       return 'To Article: "' + articleTarget.title + '"';
-   }
+   };
 
    return new db.Storable(this, props);
 }
