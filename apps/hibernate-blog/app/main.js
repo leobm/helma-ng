@@ -16,7 +16,7 @@ importModule('controllers.comments', 'comments');
 
 function main() {
    app.start({ staticDir: '../static' });
-   db.addTxnCallback();
+   db.addTxnCallbacks();
    log.info('Welcome to Hibernate Blog NG! ^^');
 }
 

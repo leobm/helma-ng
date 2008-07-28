@@ -41,11 +41,16 @@ this.initStore();
 
 
    /**
-    * Adds Rhino callback for binding Hibernate
+    * Adds Rhino callbacks for binding Hibernate
     * DB session transactions to request scope;
     * call this in the main function of an app.
     */
-   this.addTxnCallback = function () {
+   this.addTxnCallbacks = function () {
+
+      rhino.addCallback('onRequest', 'beginHibernateTxn', function () {
+         var sess = getSession();
+         sess.beginTransaction();
+      });
 
       rhino.addCallback('onResponse', 'commitHibernateTxn', function () {
          var sess = sessionFactory.getCurrentSession();
@@ -64,7 +69,6 @@ this.initStore();
       }
 
       var sess = sessionFactory.getCurrentSession();
-      sess.beginTransaction();
       return sess;
    };
 
