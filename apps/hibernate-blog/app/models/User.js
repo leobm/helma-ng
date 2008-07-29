@@ -35,7 +35,7 @@ function validateCreate(data) {
                                           msg: 'Website URL was invalid.' });
    }
    validateUniquenessOf(data.name, { key: 'name', type: User,
-                                     msg: 'User name "' + data.name + '" already exists.'})
+                                     msg: 'User name "' + data.name + '" already exists.'});
 }
 
 
