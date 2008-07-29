@@ -68,5 +68,5 @@ function doLogout() {
 
 
 function getSessionUser() {
-   return (session.data.userId ? User.get(session.data.userId) : null);
+   return session.data.userId ? User.get(session.data.userId) : null;
 }

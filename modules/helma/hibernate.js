@@ -78,8 +78,7 @@ this.initStore();
          setConfig();
       }
 
-      var sess = sessionFactory.getCurrentSession();
-      return sess;
+      return sessionFactory.getCurrentSession();
    };
 
 
@@ -89,12 +88,13 @@ this.initStore();
    var setConfig = function () {
       var mappingsDirAbsolutePath = getResource(mappingsDirRelativePath).path;
       var configPropsAbsolutePath = getResource(configPropsFileName).path;
-      var inputStream = new java.io.FileInputStream(new java.io.File(configPropsAbsolutePath));
+      var configPropsFile = new java.io.File(configPropsAbsolutePath);
+      var fileInputStream = new java.io.FileInputStream(configPropsFile);
       var configProps = new java.util.Properties();
 
       // load hibernate.properties
-      configProps.load(inputStream);
-      inputStream.close();
+      configProps.load(fileInputStream);
+      fileInputStream.close();
 
       // set configuration
       config = new org.hibernate.cfg.Configuration();
@@ -105,14 +105,16 @@ this.initStore();
       // use dynamic-map entity persistence mode
       config.setProperty('hibernate.default_entity_mode', 'dynamic-map');
       // transactions are handled by JDBC, no JTA is used
-      config.setProperty('hibernate.transaction.factory_class', 'org.hibernate.transaction.JDBCTransactionFactory');
+      config.setProperty('hibernate.transaction.factory_class',
+                         'org.hibernate.transaction.JDBCTransactionFactory');
       // enable session binding to managed context
       config.setProperty('hibernate.current_session_context_class', 'thread');
       // enable the second level cache
       config.setProperty('hibernate.cache.use_second_level_cache', 'true');
       config.setProperty('hibernate.cache.use_query_cache', 'true');
       // use easy hibernate (eh) cache
-      config.setProperty('hibernate.cache.provider_class', 'net.sf.ehcache.hibernate.SingletonEhCacheProvider');
+      config.setProperty('hibernate.cache.provider_class',
+                         'net.sf.ehcache.hibernate.SingletonEhCacheProvider');
 
       isConfigured = true;
       log.info('Configuration set.');

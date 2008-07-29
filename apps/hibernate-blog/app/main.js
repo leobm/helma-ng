@@ -23,11 +23,11 @@ function main() {
 
 function getChecks() {
    return {
-      areUsersRegistered: (User.all().size() > 0),
-      isSessionUser: (session.data.userId ? true : false),
-      isSessionUserAdmin: (session.data.userId ? 
-                           getSessionUser().isAdmin :
-                           false)
+      areUsersRegistered: User.all().size() > 0,
+      isSessionUser: session.data.userId ? true : false,
+      isSessionUserAdmin: session.data.userId ?
+                          getSessionUser().isAdmin :
+                          false
    };
 }
 
