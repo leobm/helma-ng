@@ -42,7 +42,8 @@
         <set name="comments"
             cascade="all-delete-orphan"
             order-by="COMMENT_CREATE_TIME">
-            <key column="COMMENT_F_ARTICLE_TARGET_ID" />
+            <key column="COMMENT_F_ARTICLE_TARGET_ID"
+                not-null="true" />
             <one-to-many class="Comment" />
         </set>
 

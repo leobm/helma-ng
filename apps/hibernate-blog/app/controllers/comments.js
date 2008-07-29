@@ -14,7 +14,7 @@ function create_action() {
    checkAccess(this);
    handlePostReq(this);
 
-   res.redirect('/articles/show?id=' + req.params.articleId + '#addComment');
+   res.redirect('/articles/show?id=' + req.params.articleTargetId + '#addComment');
 }
 
 function checkAccessCreate() {
@@ -23,7 +23,7 @@ function checkAccessCreate() {
 
 function onPostReqCreate() {
    session.data.message = commentModel.doCreate(req.params);
-   res.redirect('/articles/show?id=' + req.params.articleId + '#addComment');
+   res.redirect('/articles/show?id=' + req.params.articleTargetId + '#addComment');
 }
 
 

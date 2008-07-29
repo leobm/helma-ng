@@ -37,9 +37,8 @@ function doCreate(data) {
       text: data.text.stripTags(),
    };
    var comment = new Comment(props);
-   comment.save();
-   var article = articleModel.Article.get(data.articleId);
-   article.comments.add(comment);
+   var articleTarget = articleModel.Article.get(data.articleTargetId);
+   articleTarget.comments.add(comment);
 
    return 'Comment was created successfully.';
 }

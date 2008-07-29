@@ -15,7 +15,9 @@
 
         <property name="articleTargetId"
             column="COMMENT_F_ARTICLE_TARGET_ID"
-            type="long" />
+            type="long"
+            insert="false"
+            update="false" />
 
         <property name="text"
             column="COMMENT_TEXT"
