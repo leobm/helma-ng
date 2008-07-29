@@ -49,7 +49,7 @@ function validateCreate(data) {
 
 
 function getFeed(feedType) {
-   var comments = Comment.list({ max: 10, orderBy: 'createTime'});
+   var comments = Comment.list({ max: 10, orderBy: 'createTime' });
 
    var feed = new com.sun.syndication.feed.synd.SyndFeedImpl();
    feed.setFeedType(feedType);
