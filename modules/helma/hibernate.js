@@ -48,30 +48,17 @@ this.initStore();
    this.addTxnCallbacks = function () {
 
       rhino.addCallback('onRequest', 'beginHibernateTxn', function () {
-         try {
-            var sess = getSession();
-            var txn = sess.beginTransaction();
-         } catch (e) {
-            txn.rollback();
-            log.error('in onRequest beginHibernateTxn callback: ' + e.toString());
-         }
+         beginTxn();
       });
 
       rhino.addCallback('onResponse', 'commitHibernateTxn', function () {
-         try {
-            var sess = sessionFactory.getCurrentSession();
-            var txn = sess.getTransaction();
-            txn.commit();
-         } catch (e) {
-            txn.rollback();
-            log.error('in onResponse commitHibernateTxn callback: ' + e.toString());
-         }
+         commitTxn();
       });
    };
 
 
    /**
-    * Directly begin a Hibernate Session transaction.
+    * Begins a Hibernate Session transaction.
     */
    this.beginTxn = function () {
       try {
@@ -85,7 +72,7 @@ this.initStore();
 
 
    /**
-    * Directly commit a Hibernate Session transaction.
+    * Commits a Hibernate Session transaction.
     */
    this.commitTxn = function () {
       try {
