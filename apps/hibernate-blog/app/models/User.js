@@ -24,7 +24,7 @@ function doCreate(data) {
    var user = new User(props);
    user.save();
 
-   return this.doLogin(data);
+   return 'User "' + user.name + '" was registered successfully.';
 }
 
 function validateCreate(data) {

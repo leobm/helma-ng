@@ -32,7 +32,7 @@ function doCreate(data) {
    this.validateCreate(data);
 
    var props = {
-      creator: userModel.getSessionUser(),
+      creator: data.creator,
       createTime: new java.util.Date(),
       title: data.title || ( (data.text.processMarkdown().stripTags() != 0) ?
                              data.text.processMarkdown().stripTags().trim().head(47, '...') :

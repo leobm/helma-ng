@@ -76,6 +76,7 @@ function checkAccessCreate() {
 }
 
 function onPostReqCreate() {
+   req.params.creator = userModel.getSessionUser();
    session.data.message = articleModel.doCreate(req.params);
    res.redirect('/');
 }

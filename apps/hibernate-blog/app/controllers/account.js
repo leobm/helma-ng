@@ -28,7 +28,8 @@ function register_action() {
 }
 
 function onPostReqRegister() {
-   session.data.message = userModel.doCreate(req.params);
+   userModel.doCreate(req.params);
+   session.data.message = userModel.doLogin(req.params);
    res.redirect('/');
 }
 
