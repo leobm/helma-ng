@@ -11,6 +11,6 @@ function main() {
 
 var testSuite = new unittest.TestSuite('hibernateBlog');
 
-testSuite.addTest('envTest');
-testSuite.addTest('models.ArticleTest');
-testSuite.addTest('models.UserTest');
+testSuite.addTest('env_test');
+testSuite.addTest('models.Article_test');
+testSuite.addTest('models.User_test');
