@@ -1,5 +1,6 @@
 // specify the DB connector to be loaded
-importJar('lib/mysql-connector-java-5.1.6-bin.jar');
+importJar('mysql-connector-java-5.1.6-bin.jar');
+importJar('../config/cache');
 
 importModule('helma.app', 'app');
 importFromModule('helma.simpleweb', 'handleRequest');
