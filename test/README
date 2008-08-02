@@ -1,0 +1,4 @@
+How to Run the Unit Tests
+=========================
+
+  helma-ng> java -jar run.jar test/
