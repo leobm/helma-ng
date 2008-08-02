@@ -1,9 +1,8 @@
 importModule('helma.unittest', 'unittest');
-importModule('helma.shell', 'shell');
 
 
 function main() {
-   unittest.run('main').write(shell);
+   unittest.run('main');
 }
 
 

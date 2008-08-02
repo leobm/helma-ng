@@ -2,11 +2,10 @@ importJar('mysql-connector-java-5.1.6-bin.jar');
 importJar('../config/cache');
 
 importModule('helma.unittest', 'unittest');
-importModule('helma.shell', 'shell');
 
 
 function main() {
-   unittest.run('main').write(shell);
+   unittest.run('main');
 }
 
 

@@ -1,9 +1,10 @@
 importModule("core.string");
+importFromModule("helma.shell", "writeln");
 
 var __shared__ = true;
 
 (function() {
-   
+
 
    /*********************************************
     *****   P R I V A T E   M E T H O D S   *****
@@ -113,20 +114,13 @@ var __shared__ = true;
    };
    
    /**
-    * Creates a new Writer instance
+    * Creates a new ShellWriter instance
     * @class Instances of this class provide functionality for displaying
     * a test result inside a shell
     * @returns A newly created ShellWrite instance
     * @constructor
     */
-   var Writer = function(writer) {
-      
-      function print() {
-         if (writer) writer.writeln.apply(writer, arguments);
-         else {
-            writeln.apply(this, arguments);
-         }
-      }      
+   var ShellWriter = function() {
       
       /**
        * Helper method for pluralizing a word.
@@ -150,10 +144,10 @@ var __shared__ = true;
        * @private
        */
       var writeTestResult = function(result) {
-         print("Executing", result.test.constructor.name, "'" + result.test.name + "'", "...");
+         writeln("Executing", result.test.constructor.name, "'" + result.test.name + "'", "...");
          result.log.forEach(function(logItem) {
             if (logItem instanceof TestResult) {
-               print("-------------------------------------------------------------------------------");
+               writeln("-------------------------------------------------------------------------------");
                writeTestResult(logItem);
             } else {
                writeExecutionResult(logItem);
@@ -170,20 +164,20 @@ var __shared__ = true;
        */
       var writeExecutionResult = function(result) {
          if (result.wasSuccessful() === true) {
-            print("PASSED:", result.name, "(" + result.time, "ms)");
+            writeln("PASSED:", result.name, "(" + result.time, "ms)");
          } else {
             if (result.exception instanceof FailureException) {
-               print("FAILED:", result.name);
+               writeln("FAILED:", result.name);
             } else {
-               print("ERROR:", result.name);
+               writeln("ERROR:", result.name);
             }
             if (result.exception.comment != null) {
-               print("   ", result.exception.comment);
+               writeln("   ", result.exception.comment);
             }
-            print("   ", result.exception.message);
+            writeln("   ", result.exception.message);
             if (result.exception.stackTrace != null) {
                result.exception.stackTrace.forEach(function(line) {
-                  print("   ", line);
+                  writeln("   ", line);
                });
             }
          }
@@ -195,17 +189,17 @@ var __shared__ = true;
        * @param {TestResult} result The test result to render
        */
       this.write = function(result) {
-         print("===============================================================================");
+         writeln("===============================================================================");
          if (result != null) {
             writeTestResult(result);
-            print("===============================================================================");
-            print("Ran", result.testsRun,
+            writeln("===============================================================================");
+            writeln("Ran", result.testsRun,
                     pluralize("test", "tests", result.testsRun),
                     "in", result.time, "ms",
                     "(" + result.failures, pluralize("failure", "failures", result.failures) + ",",
                     result.errors, pluralize("error", "errors", result.errors) + ")");
          } else {
-            print("No tests found");
+            writeln("No tests found");
          }
          return;
       };
@@ -214,8 +208,8 @@ var __shared__ = true;
    };
    
    /** @ignore */
-   Writer.prototype.toString = function() {
-      return "[Writer]";
+   ShellWriter.prototype.toString = function() {
+      return "[ShellWriter]";
    };
    
    
@@ -299,25 +293,6 @@ var __shared__ = true;
          time += result.time;
          return;
       };
-      
-      /**
-       * Prints this TestResult.
-       * Takes an optional writer object (res, shell, ...) which has to provide a
-       * writeln() method. Otherwise it will write to the shell.
-       * If you call this method outside the shell environment you have to provide a writer.
-       *
-       * @example
-       *   importModule("helma.shell", "shell");
-       *   importModule("testing.selftest");
-       *   testing.selftest.run().write(shell);
-       *
-       * @param {object} writer   Writer object, which provides a writeln method.
-       * @return {TestResult} TestResult  for chaining purpose
-       */
-      this.write = function(writer) {
-         (new Writer(writer)).write(this);
-         return this;
-      }
       
       return this;
    };
@@ -552,10 +527,10 @@ var __shared__ = true;
             }
          }
       }
-      // (new Writer()).write(testResult);
+      (new ShellWriter()).write(testResult);
       // cleanup
       unloadTestModule();
-      return testResult;
+      return;
    };
    
    /**
@@ -627,8 +602,8 @@ var __shared__ = true;
     */
    this.TestCase.prototype.run = function(methodName) {
       var testResult = new TestResult(this);
-      // (new Writer()).write(this.execute(testResult, methodName));
-      return testResult;
+      (new ShellWriter()).write(this.execute(testResult, methodName));
+      return;
    };
    
    /**
@@ -765,8 +740,8 @@ var __shared__ = true;
     */
    this.TestSuite.prototype.run = function() {
       var testResult = new TestResult(this);
-      // (new Writer()).write(this.execute(testResult));
-      return testResult;
+      (new ShellWriter()).write(this.execute(testResult));
+      return;
    };
 
 
