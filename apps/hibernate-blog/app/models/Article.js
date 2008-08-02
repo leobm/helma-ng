@@ -34,9 +34,10 @@ function doCreate(data) {
    var props = {
       creator: data.creator,
       createTime: new java.util.Date(),
-      title: data.title || ( (data.text.processMarkdown().stripTags() != 0) ?
-                             data.text.processMarkdown().stripTags().trim().head(47, '...') :
-                             '...' ),
+      title: data.title ||
+             ( (data.text.processMarkdown().stripTags() != 0) ?
+               data.text.processMarkdown().stripTags().trim().head(47, '...') :
+               '...' ),
       text: data.text
    };
    var article = new Article(props);
