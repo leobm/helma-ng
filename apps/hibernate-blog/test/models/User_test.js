@@ -34,4 +34,6 @@ testCase.testCreate = function () {
    assertNotNull(user);
    assertEqual(user.name, 'testUser');
    assertEqual(user.password, 'pass'.md5());
+
+   return;
 }
