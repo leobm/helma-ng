@@ -2,8 +2,7 @@ importFromModule('helma.unittest', '*');
 
 importFromModule('testHelpers', '*');
 
-importModule('models.Article', 'articleModel');
-importModule('models.User', 'userModel');
+importModule('models.Article', 'model');
 
 
 var testCase = new TestCase('Article');
@@ -14,7 +13,7 @@ testCase.testCreate = function () {
    var article = getTestArticle();
 
    assertNotNull(article);
-   assertEqual(articleModel.Article.all().size(), 1);
+   assertEqual(model.Article.all().size(), 1);
    assertEqual(article.title, 'Test Title');
    assertEqual(article.text, 'Some text.');
    assertEqual(article.creator.name, 'testUser');
@@ -31,10 +30,10 @@ testCase.testUpdate = function () {
       title: 'Another Test Title',
       text: 'Some other text.'
    };
-   articleModel.doUpdate(data);
+   model.doUpdate(data);
 
    assertNotNull(article);
-   assertEqual(articleModel.Article.all().size(), 1);
+   assertEqual(model.Article.all().size(), 1);
    assertEqual(article.title, 'Another Test Title');
    assertEqual(article.text, 'Some other text.');
    assertEqual(article.creator.name, 'testUser');
@@ -46,12 +45,12 @@ testCase.testUpdate = function () {
 testCase.testDelete = function () {
    var article = getTestArticle();
 
-   articleModel.doDelete(article.id);
+   model.doDelete(article.id);
 
-   article = articleModel.Article.all()[0];
+   article = model.Article.all()[0];
 
    assertUndefined(article);
-   assertEqual(articleModel.Article.all().size(), 0);
+   assertEqual(model.Article.all().size(), 0);
 
    return;
 };
