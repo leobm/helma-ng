@@ -2,7 +2,6 @@ importFromModule('main', 'getChecks');
 importFromModule('security', '*');
 importFromModule('rendering', '*');
 importFromModule('formHandling', 'handlePostReq');
-importModule('typeExtensions');
 
 importModule('models.Article', 'articleModel');
 importModule('models.User', 'userModel');
