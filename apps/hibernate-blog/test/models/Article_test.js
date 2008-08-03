@@ -54,7 +54,6 @@ testCase.testCreate = function () {
    return;
 };
 
-
 testCase.testUpdate = function () {
    var article = (articleModel.Article.find("where a.title = 'Test Title'").size() == 1) ?
                  articleModel.Article.find("where a.title = 'Test Title'")[0] : null;
