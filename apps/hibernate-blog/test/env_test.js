@@ -2,6 +2,8 @@ importFromModule('helma.unittest', '*');
 
 importModule('helma.hibernate', 'db');
 
+importFromModule('testHelpers', '*');
+
 importModule('models.User', 'model');
 
 
@@ -21,7 +23,9 @@ testCase.testTruth = function () {
 testCase.testHibernate = function () {
    db.beginTxn();
 
-   assertEqual(model.User.all().size(), 0);
+   getTestUser();
+
+   assertEqual(model.User.all().size(), 1);
 
    db.commitTxn();
 
