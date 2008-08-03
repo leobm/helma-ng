@@ -24,7 +24,8 @@ testCase.testCreate = function () {
    if (!user) {
       var userData = {
          name: 'testUser',
-         password: 'pass'
+         password: 'pass',
+         websiteUrl: 'robi42.soup.io'
       };
       userModel.doCreate(userData);
 
@@ -34,6 +35,7 @@ testCase.testCreate = function () {
    assertNotNull(user);
    assertEqual(user.name, 'testUser');
    assertEqual(user.password, 'pass'.md5());
+   assertEqual(user.websiteUrl, 'http://robi42.soup.io');
 
    return;
 }
