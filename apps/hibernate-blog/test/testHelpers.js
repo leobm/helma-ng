@@ -1,5 +1,5 @@
-importModule('models.Article', 'articleModel');
 importModule('models.User', 'userModel');
+importModule('models.Article', 'articleModel');
 
 
 function getTestUser() {
