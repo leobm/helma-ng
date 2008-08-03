@@ -18,7 +18,7 @@ testCase.tearDown = function () {
 
 
 testCase.testCreate = function () {
-   var user = userModel.User.find("where u.name = 'testUser'") ?
+   var user = (userModel.User.find("where u.name = 'testUser'").size() == 1) ?
               userModel.User.find("where u.name = 'testUser'")[0] : null;
 
    if (!user) {

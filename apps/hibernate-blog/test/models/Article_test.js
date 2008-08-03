@@ -19,7 +19,7 @@ testCase.tearDown = function () {
 
 
 testCase.testCreate = function () {
-   var user = userModel.User.find("where u.name = 'testUser'") ?
+   var user = (userModel.User.find("where u.name = 'testUser'").size() == 1) ?
               userModel.User.find("where u.name = 'testUser'")[0] : null;
 
    if (!user) {
@@ -32,17 +32,21 @@ testCase.testCreate = function () {
       user = userModel.User.find("where u.name = 'testUser'")[0];
    }
 
+   var article = (articleModel.Article.find("where a.title = 'Test Title'").size() == 1) ?
+                 articleModel.Article.find("where a.title = 'Test Title'")[0] : null;
+
+   var articleTitle = article ? 'Another Test Title' : 'Test Title';
    var articleData = {
       creator: user,
-      title: 'Test Title',
+      title: articleTitle,
       text: 'Some text.'
    };
    articleModel.doCreate(articleData);
 
-   var article = articleModel.Article.find("where a.title = 'Test Title'")[0];
+   article = articleModel.Article.find("where a.title = '" + articleTitle + "'")[0];
 
    assertNotNull(article);
-   assertEqual(article.title, 'Test Title');
+   assertEqual(article.title, articleTitle);
    assertEqual(article.text, 'Some text.');
    assertEqual(article.creator.name, 'testUser');
    assertEqual(article.getCreatorName(), 'testUser');
@@ -52,11 +56,11 @@ testCase.testCreate = function () {
 
 
 testCase.testUpdate = function () {
-   var article = articleModel.Article.find("where a.title = 'Test Title'") ?
+   var article = (articleModel.Article.find("where a.title = 'Test Title'").size() == 1) ?
                  articleModel.Article.find("where a.title = 'Test Title'")[0] : null;
 
    if (!article) {
-      var user = userModel.User.find("where u.name = 'testUser'") ?
+      var user = (userModel.User.find("where u.name = 'testUser'").size() == 1) ?
                  userModel.User.find("where u.name = 'testUser'")[0] : null;
 
       if (!user) {
@@ -81,13 +85,13 @@ testCase.testUpdate = function () {
 
    var articleUpdateData = {
       id: article.id,
-      title: 'Another Test Title',
+      title: 'Yet Another Test Title',
       text: 'Some other text.'
    };
    articleModel.doUpdate(articleUpdateData);
 
    assertNotNull(article);
-   assertEqual(article.title, 'Another Test Title');
+   assertEqual(article.title, 'Yet Another Test Title');
    assertEqual(article.text, 'Some other text.');
    assertEqual(article.creator.name, 'testUser');
    assertEqual(article.getCreatorName(), 'testUser');
@@ -96,11 +100,11 @@ testCase.testUpdate = function () {
 };
 
 testCase.testDelete = function () {
-   var article = articleModel.Article.find("where a.title = 'Test Title'") ?
+   var article = (articleModel.Article.find("where a.title = 'Test Title'").size() == 1) ?
                  articleModel.Article.find("where a.title = 'Test Title'")[0] : null;
 
    if (!article) {
-      var user = userModel.User.find("where u.name = 'testUser'") ?
+      var user = (userModel.User.find("where u.name = 'testUser'").size() == 1) ?
                  userModel.User.find("where u.name = 'testUser'")[0] : null;
 
       if (!user) {
