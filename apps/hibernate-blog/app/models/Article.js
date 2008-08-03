@@ -1,4 +1,3 @@
-importModule('typeExtensions');
 importModule('helma.hibernate', 'db');
 importFromModule('helma.inheritance', 'mixin');
 importFromModule('validation', '*');

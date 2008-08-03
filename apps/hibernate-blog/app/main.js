@@ -8,6 +8,9 @@ importModule('helma.logging', 'logging');
 var log = logging.getLogger(__name__);
 
 importModule('helma.hibernate', 'db');
+
+importModule('typeExtensions');
+
 importFromModule('models.User', '*');
 
 importModule('controllers.articles', 'articles');

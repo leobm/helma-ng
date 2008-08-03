@@ -1,5 +1,7 @@
 importModule('helma.rhino', 'rhino');
 
+var __shared__ = true;
+
 
 var JDate = rhino.extendJavaClass(java.util.Date);
 

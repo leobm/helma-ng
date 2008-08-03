@@ -3,6 +3,8 @@ importJar('../config/cache');
 
 importModule('helma.unittest', 'unittest');
 
+importModule('typeExtensions');
+
 
 function main() {
    unittest.run('main');
@@ -12,5 +14,5 @@ function main() {
 var testSuite = new unittest.TestSuite('hibernateBlog');
 
 testSuite.addTest('env_test');
-testSuite.addTest('models.Article_test');
 testSuite.addTest('models.User_test');
+testSuite.addTest('models.Article_test');
