@@ -1,6 +1,8 @@
 importFromModule('helma.unittest', '*');
 importModule('helma.hibernate', 'db');
 
+importFromModule('testHelpers', '*');
+
 importModule('models.User', 'userModel');
 
 
@@ -18,21 +20,10 @@ testCase.tearDown = function () {
 
 
 testCase.testCreate = function () {
-   var user = (userModel.User.find("where u.name = 'testUser'").size() == 1) ?
-              userModel.User.find("where u.name = 'testUser'")[0] : null;
-
-   if (!user) {
-      var userData = {
-         name: 'testUser',
-         password: 'pass',
-         websiteUrl: 'robi42.soup.io'
-      };
-      userModel.doCreate(userData);
-
-      user = userModel.User.find("where u.name = 'testUser'")[0];
-   }
+   var user = getTestUser();
 
    assertNotNull(user);
+   assertEqual(userModel.User.all().size(), 1);
    assertEqual(user.name, 'testUser');
    assertEqual(user.password, 'pass'.md5());
    assertEqual(user.websiteUrl, 'http://robi42.soup.io');
