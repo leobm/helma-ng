@@ -1,5 +1,22 @@
+importModule('helma.hibernate', 'db');
+
 importModule('models.User', 'userModel');
 importModule('models.Article', 'articleModel');
+
+
+function handleDbTxn(testCase) {
+   testCase.setUp = function () {
+      db.beginTxn();
+      return;
+   };
+
+   testCase.tearDown = function () {
+      db.commitTxn();
+      return;
+   };
+
+   return;
+}
 
 
 function getTestUser() {

@@ -1,5 +1,4 @@
 importFromModule('helma.unittest', '*');
-importModule('helma.hibernate', 'db');
 
 importFromModule('testHelpers', '*');
 
@@ -9,16 +8,7 @@ importModule('models.User', 'userModel');
 
 var testCase = new TestCase('Article');
 
-testCase.setUp = function () {
-   db.beginTxn();
-   return;
-};
-
-testCase.tearDown = function () {
-   db.commitTxn();
-   return;
-};
-
+handleDbTxn(testCase);
 
 testCase.testCreate = function () {
    var article = getTestArticle();
