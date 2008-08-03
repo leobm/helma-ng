@@ -14,11 +14,11 @@ function doCreate(data) {
 
    var props = {
       createTime: new java.util.Date(),
-      name: data.name,
-      password: data.password.md5(),
+      name: data.name.stripTags(),
+      password: data.password.stripTags().md5(),
       websiteUrl: (data.websiteUrl && !data.websiteUrl.startsWith('http://') &&
                    !data.websiteUrl.startsWith('https://')) ?
-                  'http://' + data.websiteUrl : data.websiteUrl || null,
+                  'http://' + data.websiteUrl.stripTags() : data.websiteUrl.stripTags() || null,
       isAdmin: (User.all().size() == 0) ? true : false
    };
    var user = new User(props);
@@ -28,20 +28,20 @@ function doCreate(data) {
 }
 
 function validateCreate(data) {
-   validatePresenceOf(data.name, { msg: 'Name was empty.' });
-   validatePresenceOf(data.password, { msg: 'Password was empty.' });
+   validatePresenceOf(data.name.stripTags(), { msg: 'Name was empty.' });
+   validatePresenceOf(data.password.stripTags(), { msg: 'Password was empty.' });
    if (data.websiteUrl) {
-      validateFormatOf(data.websiteUrl, { regex: /^(https?:\/\/)?[A-Za-z0-9\.-]{2,}\.[A-Za-z]{2}/,
-                                          msg: 'Website URL was invalid.' });
+      validateFormatOf(data.websiteUrl.stripTags(), { regex: /^(https?:\/\/)?[A-Za-z0-9\.-]{2,}\.[A-Za-z]{2}/,
+                                                      msg: 'Website URL was invalid.' });
    }
-   validateUniquenessOf(data.name, { key: 'name', type: User,
-                                     msg: 'User name "' + data.name + '" already exists.'});
+   validateUniquenessOf(data.name.stripTags(), { key: 'name', type: User,
+                                                 msg: 'User name "' + data.name.stripTags() + '" already exists.'});
 }
 
 
 function doLogin(data) {
-   var userQuery = "where u.name = '" + data.name + "' and u.password = '" +
-                   data.password.md5() + "'";
+   var userQuery = "where u.name = '" + data.name.stripTags() + "' and u.password = '" +
+                   data.password.stripTags().md5() + "'";
    var userQueryResult = User.find(userQuery);
 
    if (userQueryResult[0] && (userQueryResult[0].id == session.data.userId)) {

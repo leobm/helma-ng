@@ -44,7 +44,7 @@ function doCreate(data) {
 }
 
 function validateCreate(data) {
-   validatePresenceOf(data.text, { msg: 'Text was empty.' });
+   validatePresenceOf(data.text.stripTags(), { msg: 'Text was empty.' });
 }
 
 
