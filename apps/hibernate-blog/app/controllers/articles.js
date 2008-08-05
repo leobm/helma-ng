@@ -76,7 +76,7 @@ function checkAccessCreate() {
 
 function onPostReqCreate() {
    req.params.creator = userModel.getSessionUser();
-   session.data.message = articleModel.doCreate(req.params);
+   session.data.message = articleModel.doCreate(req.params).msg;
    res.redirect('/');
 }
 
@@ -99,7 +99,7 @@ function checkAccessEdit() {
 }
 
 function onPostReqEdit() {
-   session.data.message = articleModel.doUpdate(req.params);
+   session.data.message = articleModel.doUpdate(req.params).msg;
    res.redirect('show?id=' + req.params.id);
 }
 
@@ -122,7 +122,7 @@ function checkAccessDelete() {
 }
 
 function onPostReqDelete() {
-   session.data.message = articleModel.doDelete(req.params.id);
+   session.data.message = articleModel.doDelete(req.params.id).msg;
    res.redirect('/');
 }
 

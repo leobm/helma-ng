@@ -10,7 +10,7 @@ var testCase = new TestCase('Article');
 handleDbTxn(testCase);
 
 testCase.testCreate = function () {
-   var article = getTestArticle();
+   var article = createTestArticle();
 
    assertNotNull(article);
    assertEqual(model.Article.all().size(), 1);
@@ -23,14 +23,14 @@ testCase.testCreate = function () {
 };
 
 testCase.testUpdate = function () {
-   var article = getTestArticle();
+   var article = createTestArticle();
 
    var data = {
       id: article.id,
       title: 'Another Test Title',
       text: 'Some other text.'
    };
-   model.doUpdate(data);
+   article = model.doUpdate(data).obj;
 
    assertNotNull(article);
    assertEqual(model.Article.all().size(), 1);
@@ -43,13 +43,13 @@ testCase.testUpdate = function () {
 };
 
 testCase.testDelete = function () {
-   var article = getTestArticle();
+   var article = createTestArticle();
 
    model.doDelete(article.id);
 
-   article = model.Article.all()[0];
+   article = model.Article.get(article.id);
 
-   assertUndefined(article);
+   assertNull(article);
    assertEqual(model.Article.all().size(), 0);
 
    return;

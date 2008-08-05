@@ -1,5 +1,7 @@
 importModule('helma.hibernate', 'db');
 importFromModule('helma.inheritance', 'mixin');
+
+importFromModule('model', '*');
 importFromModule('validation', '*');
 
 importModule('models.Post', 'genericModel');
@@ -42,7 +44,9 @@ function doCreate(data) {
    var article = new Article(props);
    article.save();
 
-   return 'Article "' + article.title + '" was created successfully.';
+   var msg = 'Article "' + article.title + '" was created successfully.';
+
+   return new Result(msg, article);
 }
 
 function validateCreate(data) {
@@ -60,7 +64,9 @@ function doUpdate(data) {
    article.updateTime = new java.util.Date();
    article.save();
 
-   return 'Article "' + article.title + '" was updated successfully.';
+   var msg = 'Article "' + article.title + '" was updated successfully.';
+
+   return new Result(msg, article);
 }
 
 function validateUpdate(data) {
@@ -73,7 +79,7 @@ function doDelete(id) {
    var article = Article.get(id);
    article.remove();
 
-   return 'Article "' + article.title + '" was deleted successfully.';
+   return new Result('Article "' + article.title + '" was deleted successfully.');
 }
 
 

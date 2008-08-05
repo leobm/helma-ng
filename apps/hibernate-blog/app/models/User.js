@@ -1,4 +1,6 @@
 importModule('helma.hibernate', 'db');
+
+importFromModule('model', '*');
 importFromModule('validation', '*');
 
 
@@ -24,7 +26,9 @@ function doCreate(data) {
    var user = new User(props);
    user.save();
 
-   return 'User "' + user.name + '" was registered successfully.';
+   var msg = 'User "' + user.name + '" was registered successfully.';
+
+   return new Result(msg, user);
 }
 
 function validateCreate(data) {
@@ -39,6 +43,14 @@ function validateCreate(data) {
 }
 
 
+function doDelete(id) {
+   var user = User.get(id);
+   user.remove();
+
+   return new Result('User was deleted successfully.');
+}
+
+
 function doLogin(data) {
    var userQuery = "where u.name = '" + data.name.stripTags() + "' and u.password = '" +
                    data.password.stripTags().md5() + "'";
@@ -48,7 +60,7 @@ function doLogin(data) {
       throw new Error('User "' + userQueryResult[0].name + '" is already logged in.');
    } else if (userQueryResult[0]) {
       session.data.userId = userQueryResult[0].id;
-      return 'Hello ' + userQueryResult[0].name + '!';
+      return new Result('Hello ' + userQueryResult[0].name + '!');
    } else {
       throw new Error('Login failed. Try again?');
    }
@@ -62,7 +74,7 @@ function doLogout() {
       throw new Error('No user was logged in.');
    } else {
       session.data.userId = null;
-      return 'Goodbye!';
+      return new Result('Goodbye!');
    }
 }
 

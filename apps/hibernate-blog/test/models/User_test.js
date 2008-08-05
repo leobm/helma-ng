@@ -10,7 +10,7 @@ var testCase = new TestCase('User');
 handleDbTxn(testCase);
 
 testCase.testCreate = function () {
-   var user = getTestUser();
+   var user = createTestUser();
 
    assertNotNull(user);
    assertEqual(model.User.all().size(), 1);

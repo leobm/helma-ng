@@ -22,7 +22,7 @@ function checkAccessCreate() {
 }
 
 function onPostReqCreate() {
-   session.data.message = commentModel.doCreate(req.params);
+   session.data.message = commentModel.doCreate(req.params).msg;
    res.redirect('/articles/show?id=' + req.params.articleTargetId + '#addComment');
 }
 

@@ -29,7 +29,7 @@ function register_action() {
 
 function onPostReqRegister() {
    userModel.doCreate(req.params);
-   session.data.message = userModel.doLogin(req.params);
+   session.data.message = userModel.doLogin(req.params).msg;
    res.redirect('/');
 }
 
@@ -49,14 +49,14 @@ function login_action() {
 }
 
 function onPostReqLogin() {
-   session.data.message = userModel.doLogin(req.params);
+   session.data.message = userModel.doLogin(req.params).msg;
    res.redirect('/');
 }
 
 
 function logout_action() {
    try {
-      session.data.message = userModel.doLogout();
+      session.data.message = userModel.doLogout().msg;
    } catch (e) {
       session.data.message = e.toString();
    }

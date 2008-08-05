@@ -1,3 +1,6 @@
+importModule('helma.hibernate', 'db');
+
+
 function validatePresenceOf(value, params) {
    if (!value) {
       throw new Error(params.msg);
@@ -28,7 +31,7 @@ function validateUniquenessOf(value, params) {
    var query = 'where ' + params.type.name.substring(0, 1).toLowerCase() +
                '.' + params.key + " = '" + value + "'";
 
-   if (params.type.find(query).size() > 0) {
+   if (db.store.find(params.type.name, query).size() > 0) {
       throw new Error(params.msg);
    }
 }

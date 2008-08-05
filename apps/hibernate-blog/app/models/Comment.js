@@ -1,5 +1,7 @@
 importModule('helma.hibernate', 'db');
 importFromModule('helma.inheritance', 'mixin');
+
+importFromModule('model', '*');
 importFromModule('validation', '*');
 
 importModule('models.Post', 'genericModel');
@@ -40,11 +42,19 @@ function doCreate(data) {
    var articleTarget = articleModel.Article.get(data.articleTargetId);
    articleTarget.comments.add(comment);
 
-   return 'Comment was created successfully.';
+   return new Result('Comment was created successfully.', comment);
 }
 
 function validateCreate(data) {
    validatePresenceOf(data.text.stripTags(), { msg: 'Text was empty.' });
+}
+
+
+function doDelete(id) {
+   var comment = Comment.get(id);
+   comment.remove();
+
+   return new Result('Comment was deleted successfully.');
 }
 
 

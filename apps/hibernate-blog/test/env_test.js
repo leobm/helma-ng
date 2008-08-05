@@ -23,7 +23,7 @@ testCase.testTruth = function () {
 testCase.testHibernate = function () {
    db.beginTxn();
 
-   getTestUser();
+   createTestUser();
 
    assertEqual(model.User.all().size(), 1);
 

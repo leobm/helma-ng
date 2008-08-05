@@ -19,27 +19,34 @@ function handleDbTxn(testCase) {
 }
 
 
-function getTestUser() {
+function createTestUser() {
    var user = (userModel.User.all().size() == 1) ?
               userModel.User.all()[0] : null;
 
-   if (!user) {
-      var data = {
-         name: 'testUser',
-         password: 'pass',
-         websiteUrl: 'robi42.soup.io'
-      };
-      userModel.doCreate(data);
+   if (user) {
+      var article = (articleModel.Article.all().size() == 1) ?
+                    articleModel.Article.all()[0] : null;
 
-      user = userModel.User.all()[0];
+      if (article) {
+         articleModel.doDelete(article.id);
+      }
+
+      userModel.doDelete(user.id);
    }
+
+   var data = {
+      name: 'testUser',
+      password: 'pass',
+      websiteUrl: 'robi42.soup.io'
+   };
+   user = userModel.doCreate(data).obj;
 
    return user;
 }
 
 
-function getTestArticle() {
-   var user = this.getTestUser();
+function createTestArticle() {
+   var user = this.createTestUser();
 
    var article = (articleModel.Article.all().size() == 1) ?
                  articleModel.Article.all()[0] : null;
@@ -53,9 +60,7 @@ function getTestArticle() {
       title: 'Test Title',
       text: 'Some text.'
    };
-   articleModel.doCreate(data);
-
-   article = articleModel.Article.all()[0];
+   article = articleModel.doCreate(data).obj;
 
    return article;
 }
