@@ -19,4 +19,15 @@ testCase.testCreate = function () {
    assertEqual(user.websiteUrl, 'http://robi42.soup.io');
 
    return;
+};
+
+testCase.testDelete = function () {
+   var user = createTestUser();
+
+   model.doDelete(user.id);
+
+   user = model.User.get(user.id);
+
+   assertNull(user);
+   assertEqual(model.User.all().size(), 0);
 }

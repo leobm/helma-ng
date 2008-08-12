@@ -20,18 +20,22 @@ function handleDbTxn(testCase) {
 
 
 function createTestUser() {
-   var user = (userModel.User.all().size() == 1) ?
-              userModel.User.all()[0] : null;
+   var user, users = userModel.User.all();
 
-   if (user) {
-      var article = (articleModel.Article.all().size() == 1) ?
-                    articleModel.Article.all()[0] : null;
+   if (users && (users.size() > 0)) {
+      var article, articles = articleModel.Article.all();
 
-      if (article) {
-         articleModel.doDelete(article.id);
+      if (articles && (articles.size() > 0)) {
+         for (var i in articles) {
+            article = articles[0];
+            articleModel.doDelete(article.id);
+         }
       }
 
-      userModel.doDelete(user.id);
+      for (var i in users) {
+         user = users[i];
+         userModel.doDelete(user.id);
+      }
    }
 
    var data = {
@@ -48,11 +52,13 @@ function createTestUser() {
 function createTestArticle() {
    var user = this.createTestUser();
 
-   var article = (articleModel.Article.all().size() == 1) ?
-                 articleModel.Article.all()[0] : null;
+   var article, articles = articleModel.Article.all();
 
-   if (article) {
-      articleModel.doDelete(article.id);
+   if (articles && (articles.size() > 0)) {
+      for (var i in articles) {
+         article = articles[i];
+         articleModel.doDelete(article.id);
+      }
    }
 
    var data = {
