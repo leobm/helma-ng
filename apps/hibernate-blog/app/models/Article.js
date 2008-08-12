@@ -14,7 +14,9 @@ function Article(props) {
    mixin(this, genericModel.Post);
 
    this.getTeaserText = function () {
-      return this.getMarkdownedText().stripTags().trim().head(250, ' ...');
+      var clipping = ' <a href="/articles/show?id=' + this.id + '">...</a>';
+
+      return this.getMarkdownedText().stripTags().trim().head(250, clipping);
    };
 
    this.getCommentsCountMsg = function () {

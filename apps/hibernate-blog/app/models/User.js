@@ -15,12 +15,12 @@ function doCreate(data) {
    this.validateCreate(data);
 
    var websiteUrl = (data.websiteUrl && !data.websiteUrl.startsWith('http://') &&
-                    !data.websiteUrl.startsWith('https://')) ?
+                     !data.websiteUrl.startsWith('https://')) ?
                     'http://' + data.websiteUrl : data.websiteUrl;
    var props = {
       createTime: new java.util.Date(),
       name: data.name.stripTags(),
-      password: data.password.stripTags().md5(),
+      password: data.password.md5(),
       websiteUrl: websiteUrl ? websiteUrl.stripTags() : null,
       isAdmin: (User.all().size() == 0) ? true : false
    };
@@ -34,7 +34,7 @@ function doCreate(data) {
 
 function validateCreate(data) {
    validatePresenceOf(data.name.stripTags(), { msg: 'Name was empty.' });
-   validatePresenceOf(data.password.stripTags(), { msg: 'Password was empty.' });
+   validatePresenceOf(data.password, { msg: 'Password was empty.' });
    if (data.websiteUrl) {
       validateFormatOf(data.websiteUrl.stripTags(), { regex: /^(https?:\/\/)?[A-Za-z0-9\.-]{2,}\.[A-Za-z]{2}/,
                                                       msg: 'Website URL was invalid.' });
