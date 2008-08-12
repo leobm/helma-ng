@@ -30,4 +30,6 @@ testCase.testDelete = function () {
 
    assertNull(user);
    assertEqual(model.User.all().size(), 0);
+
+   return;
 }
