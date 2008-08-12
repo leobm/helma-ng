@@ -14,9 +14,9 @@ function Comment(props) {
    mixin(this, genericModel.Post);
 
    this.getCreatorName = function () {
-      return (this.creator.websiteUrl ?
-              ('<a href="' + this.creator.websiteUrl + '">' + this.creator.name + '</a>') :
-              this.creator.name)
+      return this.creator.websiteUrl ?
+             ('<a href="' + this.creator.websiteUrl + '">' + this.creator.name + '</a>') :
+             this.creator.name
    };
 
    this.getFeedTitle = function () {
