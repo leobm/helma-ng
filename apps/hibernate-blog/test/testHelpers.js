@@ -27,7 +27,7 @@ function createTestUser() {
 
       if (articles && (articles.size() > 0)) {
          for (var i in articles) {
-            article = articles[0];
+            article = articles[i];
             articleModel.doDelete(article.id);
          }
       }
