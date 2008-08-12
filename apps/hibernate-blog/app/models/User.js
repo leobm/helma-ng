@@ -14,13 +14,14 @@ db.store.registerType(User);
 function doCreate(data) {
    this.validateCreate(data);
 
+   var websiteUrl = (data.websiteUrl && !data.websiteUrl.startsWith('http://') &&
+                    !data.websiteUrl.startsWith('https://')) ?
+                    'http://' + data.websiteUrl : data.websiteUrl;
    var props = {
       createTime: new java.util.Date(),
       name: data.name.stripTags(),
       password: data.password.stripTags().md5(),
-      websiteUrl: (data.websiteUrl && !data.websiteUrl.startsWith('http://') &&
-                   !data.websiteUrl.startsWith('https://')) ?
-                  'http://' + data.websiteUrl.stripTags() : data.websiteUrl.stripTags() || null,
+      websiteUrl: data.websiteUrl ? data.websiteUrl.stripTags() : null,
       isAdmin: (User.all().size() == 0) ? true : false
    };
    var user = new User(props);
