@@ -51,7 +51,6 @@ function createTestUser() {
 
 function createTestArticle() {
    var user = this.createTestUser();
-
    var article, articles = articleModel.Article.all();
 
    if (articles && (articles.size() > 0)) {
