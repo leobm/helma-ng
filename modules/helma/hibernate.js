@@ -1,6 +1,5 @@
 /**
  * Module for using Hibernate as ORM/persistence layer.
- * @author Robert Thurnher <r.thurnher@gmail.com>
  */
 
 importJar('hibernate/antlr-2.7.6.jar');
