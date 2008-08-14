@@ -22,7 +22,7 @@ function doCreate(data) {
       name: data.name.stripTags(),
       password: data.password.md5(),
       websiteUrl: websiteUrl ? websiteUrl.stripTags() : null,
-      isAdmin: (User.all().size() == 0) ? true : false
+      isAdmin: (User.all().size() == 0)
    };
    var user = new User(props);
    user.save();
