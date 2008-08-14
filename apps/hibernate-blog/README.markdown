@@ -10,9 +10,9 @@ How to Run the App
 
 1. Start your MySQL server and create the DBs (dev & test) + user with:
 
-   hibernate-blog/build/db.sql
+   hibernate-blog/db/init.sql
 
-2. Put the jars (needed to make feeds work) which are located in
+2. Optional: put the jars (needed to make feeds work) which are located in
    hibernate-blog/build/extra into helma-ng/lib/ext.
 
 3. Issue, e.g., the following command inside the hibernate-blog directory:
