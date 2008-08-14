@@ -1,6 +1,5 @@
 importFromModule("helma.unittest", "*");
 importModule("core.array");
-importModule("helma.shell", "shell");
 
 var testCase = new TestCase("core.array");
 
