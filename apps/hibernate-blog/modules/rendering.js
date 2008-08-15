@@ -41,6 +41,31 @@ function renderList(collection, skin, condition) {
 }
 
 
+function renderPagination(skin, data) {
+   var isPaginatable = (data.allObjectsSize > data.firstItem + data.maxItems) ||
+                       (data.firstItem - data.maxItems >= 0);
+
+   if (!isPaginatable) {
+      return;
+   } else {
+      var subskinContext;
+      res.writeln('<div id="pagination">');
+   }
+
+   if (data.allObjectsSize > data.firstItem + data.maxItems) {
+      subskinContext = { firstItem: data.firstItem + data.maxItems };
+      skin.renderSubskin('olderItemsLink', subskinContext);
+   }
+
+   if (data.firstItem - data.maxItems >= 0) {
+      subskinContext = { firstItem: data.firstItem - data.maxItems };
+      skin.renderSubskin('newerItemsLink', subskinContext);
+   }
+
+   res.writeln('</div>');
+}
+
+
 function renderSub(macrotag, skin, condition, context) {
    if (condition || (condition === undefined)) {
       skin.renderSubskin(macrotag.name, context);

@@ -51,15 +51,8 @@
   </div>
 </div>
 
-<% subskin 'pagination' %>
-<div id="pagination">
-  <% newerItemsLink %>
-  <% olderItemsLink %>
-</div>
-<div style="clear: both;"></div>
-
 <% subskin 'newerItemsLink' %>
-<strong style="float: left;"><a href="?first=<% firstItemIdx %>">&larr; Newer</a>&nbsp;</strong>
+<strong style="float: left;"><a href="?first=<% firstItem %>">&larr; Newer</a>&nbsp;</strong>
 
 <% subskin 'olderItemsLink' %>
-<strong style="float: right;"><a href="?first=<% firstItemIdx %>">Older &rarr;</a></strong>
+<strong style="float: right;"><a href="?first=<% firstItem %>">Older &rarr;</a></strong>
