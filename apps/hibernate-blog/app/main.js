@@ -20,7 +20,9 @@ importModule('controllers.comments', 'comments');
 
 function main() {
    app.start({ staticDir: '../static' });
+
    db.addTxnCallbacks();
+
    log.info('Welcome to Hibernate Blog NG! ^^');
 }
 
@@ -40,5 +42,6 @@ function main_action() {
    if (User.all().size() == 0) {
       res.redirect('account');
    }
+
    res.redirect('articles');
 }

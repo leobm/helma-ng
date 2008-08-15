@@ -14,7 +14,6 @@ var testCase = new TestCase('environment');
  */
 testCase.testTruth = function () {
    assertTrue(true);
-   return;
 };
 
 /**
@@ -28,6 +27,4 @@ testCase.testHibernate = function () {
    assertEqual(model.User.all().size(), 1);
 
    db.commitTxn();
-
-   return;
 };
