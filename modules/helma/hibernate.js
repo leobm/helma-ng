@@ -346,7 +346,7 @@ function Store() {
             break;
 
          case 'list':
-            var criteria = sess['createCriteria(java.lang.String)'](params.type);
+            var criteria = sess.createCriteria(params.type);
 
             criteria.setCacheable(true);
 
@@ -354,6 +354,7 @@ function Store() {
                var order = (params.order == 'asc') ?
                            org.hibernate.criterion.Order.asc(params.orderBy) :
                            org.hibernate.criterion.Order.desc(params.orderBy);
+
                criteria.addOrder(order);
             }
 
@@ -363,6 +364,12 @@ function Store() {
 
             if (params.max && (typeof params.max == 'number')) {
                criteria.setMaxResults(params.max);
+            }
+
+            if (params.sql) {
+               var sqlRestriction = org.hibernate.criterion.Restrictions.sqlRestriction(params.sql);
+
+               criteria.add(sqlRestriction);
             }
 
             result = new ScriptableList(criteria.list());
