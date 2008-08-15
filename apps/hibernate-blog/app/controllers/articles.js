@@ -8,7 +8,10 @@ importModule('models.User', 'userModel');
 
 
 function main_action() {
-   var articles = articleModel.Article.list({ orderBy: 'createTime' });
+   var firstItemIdx = parseInt(req.params.first) || 0;
+   var maxItems = 4;
+   var allArticlesSize = articleModel.Article.all().size();
+   var articles = articleModel.Article.list({ first: firstItemIdx, max: maxItems, orderBy: 'createTime' });
 
    var context = {
       loginLink: function (macrotag, skin) {
@@ -27,6 +30,18 @@ function main_action() {
                        userModel.getSessionUser().name : null,
       listArticles: function (macrotag, skin) {
          renderList(articles, skin);
+      },
+      pagination: function(macrotag, skin, context) {
+         renderSub(macrotag, skin, ((allArticlesSize > firstItemIdx + maxItems) ||
+                                    (firstItemIdx - maxItems >= 0)), context)
+      },
+      olderItemsLink: function(macrotag, skin, context) {
+         context.firstItemIdx = firstItemIdx + maxItems;
+         renderSub(macrotag, skin, (allArticlesSize > firstItemIdx + maxItems), context)
+      },
+      newerItemsLink: function(macrotag, skin, context) {
+         context.firstItemIdx = firstItemIdx - maxItems;
+         renderSub(macrotag, skin, (firstItemIdx - maxItems >= 0), context)
       }
    };
    renderView(context);
