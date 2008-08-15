@@ -18,8 +18,6 @@ testCase.testCreate = function () {
    assertEqual(article.text, 'Some text.');
    assertEqual(article.creator.name, 'testUser');
    assertEqual(article.getCreatorName(), 'testUser');
-
-   return;
 };
 
 testCase.testUpdate = function () {
@@ -38,8 +36,6 @@ testCase.testUpdate = function () {
    assertEqual(article.text, 'Some other text.');
    assertEqual(article.creator.name, 'testUser');
    assertEqual(article.getCreatorName(), 'testUser');
-
-   return;
 };
 
 testCase.testDelete = function () {
@@ -51,6 +47,4 @@ testCase.testDelete = function () {
 
    assertNull(article);
    assertEqual(model.Article.all().size(), 0);
-
-   return;
 };

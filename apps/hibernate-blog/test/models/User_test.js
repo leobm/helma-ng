@@ -17,8 +17,6 @@ testCase.testCreate = function () {
    assertEqual(user.name, 'testUser');
    assertEqual(user.password, 'pass'.md5());
    assertEqual(user.websiteUrl, 'http://robi42.soup.io');
-
-   return;
 };
 
 testCase.testDelete = function () {
@@ -30,6 +28,4 @@ testCase.testDelete = function () {
 
    assertNull(user);
    assertEqual(model.User.all().size(), 0);
-
-   return;
 }

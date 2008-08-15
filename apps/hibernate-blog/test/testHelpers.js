@@ -7,36 +7,20 @@ importModule('models.Article', 'articleModel');
 function handleDbTxn(testCase) {
    testCase.setUp = function () {
       db.beginTxn();
-      return;
+
+      // reset DB content
+      db.store.query('delete from Article').executeUpdate();
+      db.store.query('delete from User').executeUpdate();
    };
 
    testCase.tearDown = function () {
       db.commitTxn();
-      return;
    };
-
-   return;
 }
 
 
 function createTestUser() {
-   var user, users = userModel.User.all();
-
-   if (users && (users.size() > 0)) {
-      var article, articles = articleModel.Article.all();
-
-      if (articles && (articles.size() > 0)) {
-         for (var i in articles) {
-            article = articles[i];
-            articleModel.doDelete(article.id);
-         }
-      }
-
-      for (var i in users) {
-         user = users[i];
-         userModel.doDelete(user.id);
-      }
-   }
+   var user;
 
    var data = {
       name: 'testUser',
@@ -51,14 +35,6 @@ function createTestUser() {
 
 function createTestArticle() {
    var user = this.createTestUser();
-   var article, articles = articleModel.Article.all();
-
-   if (articles && (articles.size() > 0)) {
-      for (var i in articles) {
-         article = articles[i];
-         articleModel.doDelete(article.id);
-      }
-   }
 
    var data = {
       creator: user,
