@@ -54,12 +54,12 @@ function renderPagination(skin, data) {
 
    if (data.allObjectsSize > data.firstItem + data.maxItems) {
       subskinContext = { firstItem: data.firstItem + data.maxItems };
-      skin.renderSubskin('furtherItemsLink', subskinContext);
+      skin.renderSubskin('nextPageLink', subskinContext);
    }
 
    if (data.firstItem - data.maxItems >= 0) {
       subskinContext = { firstItem: data.firstItem - data.maxItems };
-      skin.renderSubskin('previousItemsLink', subskinContext);
+      skin.renderSubskin('previousPageLink', subskinContext);
    }
 
    res.writeln('</div>');
