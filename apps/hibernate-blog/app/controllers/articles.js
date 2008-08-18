@@ -11,7 +11,7 @@ function main_action() {
    var paginationData = {
       firstItem: parseInt(req.params.first) || 0,
       maxItems: 4,
-      allObjectsSize: articleModel.Article.all().size()
+      collection: articleModel.Article.all()
    };
    var items = articleModel.Article.list({ first: paginationData.firstItem,
                                            max: paginationData.maxItems,

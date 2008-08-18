@@ -42,7 +42,7 @@ function renderList(collection, skin, condition) {
 
 
 function renderPagination(skin, data) {
-   var isPaginatable = (data.allObjectsSize > data.firstItem + data.maxItems) ||
+   var isPaginatable = (data.collection.size() > data.firstItem + data.maxItems) ||
                        (data.firstItem - data.maxItems >= 0);
 
    if (!isPaginatable) {
@@ -52,7 +52,7 @@ function renderPagination(skin, data) {
       res.writeln('<div id="pagination">');
    }
 
-   if (data.allObjectsSize > data.firstItem + data.maxItems) {
+   if (data.collection.size() > data.firstItem + data.maxItems) {
       subskinContext = { firstItem: data.firstItem + data.maxItems };
       skin.renderSubskin('nextPageLink', subskinContext);
    }
