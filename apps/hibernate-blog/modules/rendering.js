@@ -2,6 +2,9 @@ importFromModule('helma.skin', 'render');
 
 importFromModule('formHandling', 'handleMessage');
 
+importFromModule('main', 'getChecks');
+importModule('models.User', 'userModel');
+
 
 function renderView(context, skinName) {
    var path = req.path.substring(1).split('/');
@@ -11,14 +14,19 @@ function renderView(context, skinName) {
    if (context) {
       context.path = req.path;
       context.message = handleMessage();
+      context.sessionUserName = getChecks().isSessionUser ?
+                                userModel.getSessionUser().name : null;
 
       if (context.object) {
-         this.addObjectPropsToContext(context.object, context)
+         this.addObjectPropsToContext(context.object, context);
       }
+
    } else {
       var context = {
          path: req.path,
-         message: handleMessage()
+         message: handleMessage(),
+         sessionUserName: getChecks().isSessionUser ?
+                          userModel.getSessionUser().name : null
       };
    }
    render('views/' + controller + '/' + (skinName || action) + '.html', context);

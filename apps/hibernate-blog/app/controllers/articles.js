@@ -30,8 +30,6 @@ function main_action() {
       logoutLink: function (macrotag, skin, context) {
          renderSub(macrotag, skin, getChecks().isSessionUser, context);
       },
-      sessionUserName: getChecks().isSessionUser ?
-                       userModel.getSessionUser().name : null,
       listArticles: function (macrotag, skin) {
          renderList(items, skin);
       },
