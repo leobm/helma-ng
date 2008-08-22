@@ -53,7 +53,10 @@ function validateCreateComment(data) {
 
 function deleteComment(id) {
    var comment = Comment.get(id);
+   var articleTarget = Article.get(comment.articleTargetId);
    comment.remove();
+   articleTarget.commentsCount--;
+   articleTarget.save();
 
    return new Result('Comment was deleted successfully.');
 }
