@@ -1,8 +1,7 @@
-importFromModule('main', 'getChecks');
-importFromModule('security', 'checkAccess');
-importFromModule('formHandling', 'handlePostReq');
+importFromModule('app.modules.security', '*');
+importFromModule('app.modules.formHandling', 'handlePostReq');
 
-importModule('models.Comment', 'commentModel');
+importFromModule('app.models.Comment', '*');
 
 
 function main_action() {
@@ -22,12 +21,12 @@ function checkAccessCreate() {
 }
 
 function onPostReqCreate() {
-   session.data.message = commentModel.doCreate(req.params).msg;
+   session.data.message = createComment(req.params).msg;
    res.redirect('/articles/show?id=' + req.params.articleTargetId + '#addComment');
 }
 
 
 function atom_xml_action() {
    res.contentType = 'application/atom+xml';
-   res.write(commentModel.getFeed('atom_0.3'));
+   res.write(getCommentsFeed('atom_0.3'));
 }

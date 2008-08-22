@@ -1,3 +1,17 @@
+importFromModule('app.models.User', 'getSessionUser');
+
+
+function getChecks() {
+   return {
+      areUsersRegistered: User.all().size() > 0,
+      isSessionUser: session.data.userId ? true : false,
+      isSessionUserAdmin: session.data.userId ?
+                          getSessionUser().isAdmin :
+                          false
+   };
+}
+
+
 function checkAccess(moduleScope) {
    try {
       var path = req.path.split('/');

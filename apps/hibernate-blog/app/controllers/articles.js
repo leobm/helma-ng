@@ -1,21 +1,20 @@
-importFromModule('main', 'getChecks');
-importFromModule('security', '*');
-importFromModule('rendering', '*');
-importFromModule('formHandling', 'handlePostReq');
+importFromModule('app.modules.security', '*');
+importFromModule('app.modules.rendering', '*');
+importFromModule('app.modules.formHandling', 'handlePostReq');
 
-importModule('models.Article', 'articleModel');
-importModule('models.User', 'userModel');
+importFromModule('app.models.article', '*');
+importFromModule('app.models.user', 'getSessionUser');
 
 
 function main_action() {
    var paginationData = {
       firstItem: parseInt(req.params.first) || 0,
       maxItems: 4,
-      collection: articleModel.Article.all()
+      collection: Article.all()
    };
-   var items = articleModel.Article.list({ first: paginationData.firstItem,
-                                           max: paginationData.maxItems,
-                                           orderBy: 'createTime' });
+   var items = Article.list({ first: paginationData.firstItem,
+                              max: paginationData.maxItems,
+                              orderBy: 'createTime' });
 
    var context = {
       loginLink: function (macrotag, skin) {
@@ -42,7 +41,7 @@ function main_action() {
 
 
 function show_action() {
-   var article = articleModel.Article.get(req.params.id);
+   var article = Article.get(req.params.id);
 
    if (article) {
       var context = {
@@ -83,8 +82,8 @@ function checkAccessCreate() {
 }
 
 function onPostReqCreate() {
-   req.params.creator = userModel.getSessionUser();
-   session.data.message = articleModel.doCreate(req.params).msg;
+   req.params.creator = getSessionUser();
+   session.data.message = createArticle(req.params).msg;
    res.redirect('/');
 }
 
@@ -93,7 +92,7 @@ function edit_action() {
    checkAccess(this);
    handlePostReq(this);
 
-   var article = articleModel.Article.get(req.params.id);
+   var article = Article.get(req.params.id);
 
    if (article) {
       renderView({ object: article });
@@ -107,7 +106,7 @@ function checkAccessEdit() {
 }
 
 function onPostReqEdit() {
-   session.data.message = articleModel.doUpdate(req.params).msg;
+   session.data.message = updateArticle(req.params).msg;
    res.redirect('show?id=' + req.params.id);
 }
 
@@ -116,7 +115,7 @@ function delete_action() {
    checkAccess(this);
    handlePostReq(this);
 
-   var article = articleModel.Article.get(req.params.id);
+   var article = Article.get(req.params.id);
 
    if (article) {
       renderView({ object: article });
@@ -130,12 +129,12 @@ function checkAccessDelete() {
 }
 
 function onPostReqDelete() {
-   session.data.message = articleModel.doDelete(req.params.id).msg;
+   session.data.message = deleteArticle(req.params.id).msg;
    res.redirect('/');
 }
 
 
 function atom_xml_action() {
    res.contentType = 'application/atom+xml';
-   res.write(articleModel.getFeed('atom_0.3'));
+   res.write(getArticlesFeed('atom_0.3'));
 }

@@ -21,12 +21,6 @@ var log = logging.getLogger(__name__);
 
 var __shared__ = true;
 
-// used to determine whether config should be re-built on each request
-var isDevEnvironment = false;
-
-// used to get paths of hibernate.properties and mapping files
-var configPropsFileName     = 'hibernate.properties';
-var mappingsDirRelativePath = 'mappings';
 
 // used for holding the Store instance
 var store;
@@ -35,8 +29,20 @@ this.initStore();
 
 (function () {
 
+   // used to get paths of hibernate.properties and mapping files
+   var configPropsFileRelativePath;
+   var mappingsDirRelativePath = 'db/mappings';
+
    var isConfigured = false;
    var config, sessionFactory;
+
+
+   /**
+    * Use this for setting the path in which hibernate.properties resides.
+    */
+   this.setConfigPath = function (path) {
+      configPropsFileRelativePath = path + '/hibernate.properties';
+   };
 
 
    /**
@@ -89,7 +95,7 @@ this.initStore();
     * Gets a Hibernate DB session.
     */
    this.getSession = function () {
-      if (isDevEnvironment || !isConfigured) {
+      if (!isConfigured) {
          setConfig();
       }
 
@@ -102,7 +108,7 @@ this.initStore();
     */
    var setConfig = function () {
       var mappingsDirAbsolutePath = getResource(mappingsDirRelativePath).path;
-      var configPropsAbsolutePath = getResource(configPropsFileName).path;
+      var configPropsAbsolutePath = getResource(configPropsFileRelativePath).path;
       var configPropsFile = new java.io.File(configPropsAbsolutePath);
       var fileInputStream = new java.io.FileInputStream(configPropsFile);
       var configProps = new java.util.Properties();

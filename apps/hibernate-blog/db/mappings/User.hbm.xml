@@ -4,37 +4,37 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class entity-name="User" table="BLOG_USERS">
+    <class entity-name="User" table="blog_users">
         <cache usage="read-write" />
 
         <id name="id"
-            column="USER_ID"
+            column="user_id"
             type="long">
             <generator class="native" />
         </id>
 
         <property name="name"
-            column="USER_NAME"
+            column="user_name"
             type="string"
             unique="true"
             not-null="true" />
 
         <property name="password"
-            column="USER_PASSWORD"
+            column="user_password"
             type="string"
             not-null="true" />
 
         <property name="websiteUrl"
-            column="USER_WEBSITE_URL"
+            column="user_website_url"
             type="string" />
 
         <property name="isAdmin"
-            column="USER_IS_ADMIN"
+            column="user_is_admin"
             type="boolean"
             not-null="true" />
 
         <property name="createTime"
-            column="USER_CREATE_TIME"
+            column="user_create_time"
             type="timestamp"
             not-null="true"
             update="false" />

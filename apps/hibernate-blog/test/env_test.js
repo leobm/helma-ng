@@ -2,12 +2,12 @@ importFromModule('helma.unittest', '*');
 
 importModule('helma.hibernate', 'db');
 
-importFromModule('testHelpers', '*');
+importFromModule('test.helpers', '*');
 
-importModule('models.User', 'model');
+importFromModule('app.models.User', 'User');
 
 
-var testCase = new TestCase('environment');
+var testCase = new TestCase('Environment');
 
 /**
  * Testing the test environment.
@@ -24,7 +24,7 @@ testCase.testHibernate = function () {
 
    createTestUser();
 
-   assertEqual(model.User.all().size(), 1);
+   assertEqual(User.all().size(), 1);
 
    db.commitTxn();
 };

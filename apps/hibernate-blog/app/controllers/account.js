@@ -1,8 +1,8 @@
-importFromModule('main', 'getChecks');
-importFromModule('rendering', '*');
-importFromModule('formHandling', 'handlePostReq');
+importFromModule('app.modules.security', 'getChecks');
+importFromModule('app.modules.rendering', '*');
+importFromModule('app.modules.formHandling', 'handlePostReq');
 
-importModule('models.User', 'userModel');
+importFromModule('app.models.User', '*');
 
 
 function main_action() {
@@ -28,14 +28,14 @@ function register_action() {
 }
 
 function onPostReqRegister() {
-   userModel.doCreate(req.params);
-   session.data.message = userModel.doLogin(req.params).msg;
+   createUser(req.params);
+   session.data.message = loginUser(req.params).msg;
    res.redirect('/');
 }
 
 
 function login_action() {
-   if (userModel.User.all().size() == 0) {
+   if (User.all().size() == 0) {
       res.redirect('register');
    } else {
       handlePostReq(this);
@@ -49,14 +49,14 @@ function login_action() {
 }
 
 function onPostReqLogin() {
-   session.data.message = userModel.doLogin(req.params).msg;
+   session.data.message = loginUser(req.params).msg;
    res.redirect('/');
 }
 
 
 function logout_action() {
    try {
-      session.data.message = userModel.doLogout().msg;
+      session.data.message = logoutUser().msg;
    } catch (e) {
       session.data.message = e.toString();
    }

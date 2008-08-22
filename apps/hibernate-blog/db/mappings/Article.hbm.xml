@@ -4,45 +4,45 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class entity-name="Article" table="BLOG_ARTICLES">
+    <class entity-name="Article" table="blog_articles">
         <cache usage="read-write" />
 
         <id name="id"
-            column="ARTICLE_ID"
+            column="article_id"
             type="long">
             <generator class="native" />
         </id>
 
         <property name="title"
-            column="ARTICLE_TITLE"
+            column="article_title"
             type="string"
             not-null="true" />
 
         <property name="text"
-            column="ARTICLE_TEXT"
+            column="article_text"
             type="text"
             not-null="true" />
 
         <property name="createTime"
-            column="ARTICLE_CREATE_TIME"
+            column="article_create_time"
             type="timestamp"
             not-null="true"
             update="false" />
 
         <property name="updateTime"
-            column="ARTICLE_UPDATE_TIME"
+            column="article_update_time"
             type="timestamp" />
 
         <many-to-one name="creator"
-            column="ARTICLE_F_USER_CREATOR_ID"
+            column="article_f_user_creator_id"
             class="User"
             not-null="true"
             update="false" />
 
         <set name="comments"
             cascade="all-delete-orphan"
-            order-by="COMMENT_CREATE_TIME">
-            <key column="COMMENT_F_ARTICLE_TARGET_ID"
+            order-by="comment_create_time">
+            <key column="comment_f_article_parent_id"
                 not-null="true" />
             <one-to-many class="Comment" />
         </set>

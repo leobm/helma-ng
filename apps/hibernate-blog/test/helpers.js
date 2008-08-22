@@ -1,7 +1,7 @@
 importModule('helma.hibernate', 'db');
 
-importModule('models.User', 'userModel');
-importModule('models.Article', 'articleModel');
+importFromModule('app.models.user', '*');
+importFromModule('app.models.article', '*');
 
 
 function handleDbTxn(testCase) {
@@ -27,7 +27,7 @@ function createTestUser() {
       password: 'pass',
       websiteUrl: 'robi42.soup.io'
    };
-   user = userModel.doCreate(data).obj;
+   user = createUser(data).obj;
 
    return user;
 }
@@ -41,7 +41,7 @@ function createTestArticle() {
       title: 'Test Title',
       text: 'Some text.'
    };
-   article = articleModel.doCreate(data).obj;
+   article = createArticle(data).obj;
 
    return article;
 }
