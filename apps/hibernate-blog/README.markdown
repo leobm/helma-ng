@@ -17,7 +17,7 @@ How to Run the App
 
 3. Issue, e.g., the following command inside the hibernate-blog directory:
 
-   hibernate-blog> java -jar ../../run.jar main.js
+   hibernate-blog> ./run.sh app.js
 
 4. Then point your browser to:
 
@@ -31,7 +31,7 @@ How to Run the Unit Tests
 
 2. Issue, e.g., the following command inside the hibernate-blog dir:
 
-   hibernate-blog> java -jar ../../run.jar test.js
+   hibernate-blog> ./run.sh test.js
 
 
 Dependencies
