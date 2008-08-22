@@ -7,8 +7,6 @@ importModule('helma.hibernate', 'db');
 importModule('modules.typeExtensions');
 
 
-function main() {
-   db.setConfigPath('config/test');
+db.setConfigPath('config/test');
 
-   unittest.run('test.suite');
-}
+unittest.run('test.suite');
