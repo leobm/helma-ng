@@ -7,7 +7,7 @@ importFromModule('test.helpers', '*');
 importFromModule('app.models.User', 'User');
 
 
-var testCase = new TestCase('Environment');
+var testCase = new TestCase('environment');
 
 /**
  * Testing the test environment.
