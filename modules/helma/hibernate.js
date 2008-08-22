@@ -164,7 +164,7 @@ this.initStore();
     * Used for decorating model objects, fetched from DB, with resp. instance methods.
     */
    this.addInstanceMethods = function (object) {
-      var constructor = store.getTypeRegistry()[object.$type$];
+      var constructor = store.typeRegistry[object.$type$];
       var instance = new constructor();
 
       for (var i in instance) {
@@ -230,15 +230,11 @@ function Storable(object, properties) {
  * resp. instance methods when fetched from DB.
  */
 function Store() {
-   var typeRegistry = {};
-
-   this.getTypeRegistry = function () {
-      return typeRegistry;
-   };
+   this.typeRegistry = {};
 
    this.registerType = function (ctor) {
       // add type to registry
-      typeRegistry[ctor.name] = ctor;
+      this.typeRegistry[ctor.name] = ctor;
       log.debug(ctor.name + ' type registered.');
 
       // install get, find, all and list methods on constructor
@@ -407,7 +403,7 @@ function Store() {
  */
 function initStore() {
    store = store || new Store();
-   log.info('Store initialized with empty typeRegistry: ' + uneval( store.getTypeRegistry() ));
+   log.info('Store initialized with empty typeRegistry: ' + uneval( store.typeRegistry ));
 }
 
 
