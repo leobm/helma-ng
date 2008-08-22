@@ -9,9 +9,6 @@ importFromModule('app.models.post', 'Post');
 
 function Article(props) {
 
-//   belongsTo('creator', User, { notNull: true, updates: false });
-//   hasMany('comments', Comment, { orderBy: 'createTime' });
-
    // mixin all instance methods of Post
    mixin(this, Post);
 
