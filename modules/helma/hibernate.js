@@ -38,7 +38,7 @@ this.initStore();
 
 
    /**
-    * Use this for setting the path in which hibernate.properties resides.
+    * Use this for setting the path in which hibernate.properties file resides.
     */
    this.setConfigPath = function (path) {
       configPropsFileRelativePath = path + '/hibernate.properties';
@@ -344,7 +344,11 @@ function Store() {
             break;
 
          case 'getAll':
-            result = new ScriptableList(sess.find(new java.lang.String('from ' + params.type)));
+            var criteria = sess.createCriteria(params.type);
+
+            criteria.setCacheable(true);
+
+            result = new ScriptableList(criteria.list());
 
             for (var i in result) {
                result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
