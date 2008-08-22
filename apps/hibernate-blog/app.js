@@ -3,8 +3,6 @@ importJar('lib/mysql-connector-java-5.1.6-bin.jar');
 importJar('config/cache');
 
 importModule('helma.app', 'app');
-importFromModule('helma.simpleweb', 'handleRequest');
-
 importModule('helma.hibernate', 'db');
 importModule('helma.logging', 'logging');
 var log = logging.getLogger(__name__);
