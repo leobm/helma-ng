@@ -6,7 +6,6 @@ importFromModule('modules.validation', '*');
 
 importFromModule('app.models.post', 'Post');
 importFromModule('app.models.article', '*');
-importFromModule('app.models.user', '*');
 
 
 function Comment(props) {
@@ -34,7 +33,7 @@ function createComment(data) {
    this.validateCreateComment(data);
 
    var props = {
-      creator: getSessionUser(),
+      creator: data.creator,
       createTime: new java.util.Date(),
       text: data.text.stripTags(),
    };

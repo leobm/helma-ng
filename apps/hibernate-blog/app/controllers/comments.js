@@ -1,7 +1,8 @@
 importFromModule('app.modules.security', '*');
 importFromModule('app.modules.formHandling', 'handlePostReq');
 
-importFromModule('app.models.Comment', '*');
+importFromModule('app.models.comment', '*');
+importFromModule('app.models.user', 'getSessionUser');
 
 
 function main_action() {
@@ -21,6 +22,7 @@ function checkAccessCreate() {
 }
 
 function onPostReqCreate() {
+   req.params.creator = getSessionUser();
    session.data.message = createComment(req.params).msg;
    res.redirect('/articles/show?id=' + req.params.articleTargetId + '#addComment');
 }
