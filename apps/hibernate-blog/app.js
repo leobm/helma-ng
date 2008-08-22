@@ -12,9 +12,11 @@ var log = logging.getLogger(__name__);
 importModule('modules.typeExtensions');
 
 
-app.start();
+if (__name__ == '__main__') {
+   app.start();
 
-db.setConfigPath('config/dev');
-db.addTxnCallbacks();
+   db.setConfigPath('config/dev');
+   db.addTxnCallbacks();
 
-log.info('Welcome to Hibernate Blog NG! ^^');
+   log.info('Welcome to Hibernate Blog NG! ^^');
+}
