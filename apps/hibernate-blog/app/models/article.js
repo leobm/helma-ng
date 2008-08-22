@@ -19,10 +19,8 @@ function Article(props) {
    };
 
    this.getCommentsCountMsg = function () {
-      var commentsCount = this.comments.size();
-
-      return (commentsCount == 1) ? (commentsCount + ' comment') :
-             (commentsCount + ' comments');
+      return (this.commentsCount == 1) ? (this.commentsCount + ' comment') :
+             (this.commentsCount + ' comments');
    };
 
    return new db.Storable(this, props);
@@ -40,7 +38,8 @@ function createArticle(data) {
              ( (data.text.processMarkdown().stripTags() != 0) ?
                data.text.processMarkdown().stripTags().trim().head(47, '...') :
                '...' ),
-      text: data.text
+      text: data.text,
+      commentsCount: 0
    };
    var article = new Article(props);
    article.save();

@@ -33,6 +33,10 @@
             column="article_update_time"
             type="timestamp" />
 
+        <property name="commentsCount"
+            column="article_comments_count"
+            type="double" />
+
         <many-to-one name="creator"
             column="article_f_user_creator_id"
             class="User"

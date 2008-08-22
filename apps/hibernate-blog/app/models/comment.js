@@ -41,6 +41,7 @@ function createComment(data) {
    var comment = new Comment(props);
    var articleTarget = Article.get(data.articleTargetId);
    articleTarget.comments.add(comment);
+   articleTarget.commentsCount++;
 
    return new Result('Comment was created successfully.', comment);
 }
