@@ -22,14 +22,12 @@ function handleDbTxn(testCase) {
 
 
 function createTestUser() {
-   var user;
-
    var data = {
       name: 'testUser',
       password: 'pass',
       websiteUrl: 'robi42.soup.io'
    };
-   user = createUser(data).obj;
+   var user = createUser(data).obj;
 
    return user;
 }
@@ -37,7 +35,6 @@ function createTestUser() {
 
 function createTestArticle() {
    var user = this.createTestUser();
-
    var data = {
       creator: user,
       title: 'Test Title',
@@ -52,11 +49,10 @@ function createTestArticle() {
 function createTestComment() {
    var article = this.createTestArticle();
    db.commitTxn();
-   db.beginTxn();
 
+   db.beginTxn();
    article = Article.get(article.id);
    var user = article.creator;
-
    var data = {
       creator: user,
       articleTargetId: article.id,
@@ -64,8 +60,8 @@ function createTestComment() {
    };
    var comment = createComment(data).obj;
    db.commitTxn();
-   db.beginTxn();
 
+   db.beginTxn();
    comment = Comment.get(comment.id);
 
    return comment;
