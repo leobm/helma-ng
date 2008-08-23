@@ -57,7 +57,7 @@ function deleteUser(id) {
 
 function loginUser(data) {
    var userQuery = "where u.name = '" + data.name.stripTags() + "' and u.password = '" +
-                   data.password.stripTags().md5() + "'";
+                   data.password.md5() + "'";
    var userQueryResult = User.find(userQuery);
 
    if (userQueryResult[0] && (userQueryResult[0].id == session.data.userId)) {
