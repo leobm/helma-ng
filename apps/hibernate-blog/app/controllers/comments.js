@@ -30,5 +30,5 @@ function onPostReqCreate() {
 
 function atom_xml_action() {
    res.contentType = 'application/atom+xml';
-   res.write(getCommentsFeed('atom_0.3'));
+   res.write(getCommentsFeed('atom_1.0'));
 }

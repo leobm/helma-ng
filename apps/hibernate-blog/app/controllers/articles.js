@@ -136,5 +136,5 @@ function onPostReqDelete() {
 
 function atom_xml_action() {
    res.contentType = 'application/atom+xml';
-   res.write(getArticlesFeed('atom_0.3'));
+   res.write(getArticlesFeed('atom_1.0'));
 }
