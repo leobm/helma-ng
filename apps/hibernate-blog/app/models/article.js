@@ -95,15 +95,15 @@ function getArticlesFeed(feedType) {
 
    var entry, entries = new java.util.ArrayList();
 
-   for (var i in articles) {
+   for each (article in articles) {
       entry = new com.sun.syndication.feed.synd.SyndEntryImpl();
-      entry.setTitle(articles[i].title);
-      entry.setLink('show?id=' + articles[i].id);
-      entry.setPublishedDate(articles[i].createTime);
+      entry.setTitle(article.title);
+      entry.setLink('show?id=' + article.id);
+      entry.setPublishedDate(article.createTime);
 
       var description = new com.sun.syndication.feed.synd.SyndContentImpl();
       description.setType('text/html');
-      description.setValue(articles[i].getMarkdownedText());
+      description.setValue(article.getMarkdownedText());
       entry.setDescription(description);
 
       entries.add(entry);

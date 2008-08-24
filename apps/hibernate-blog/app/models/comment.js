@@ -73,16 +73,16 @@ function getCommentsFeed(feedType) {
 
    var entry, entries = new java.util.ArrayList();
 
-   for (var i in comments) {
+   for each (comment in comments) {
       entry = new com.sun.syndication.feed.synd.SyndEntryImpl();
-      entry.setTitle(comments[i].getFeedTitle());
-      entry.setLink('/articles/show?id=' + comments[i].articleTargetId +
-                    '#comment' + comments[i].id);
-      entry.setPublishedDate(comments[i].createTime);
+      entry.setTitle(comment.getFeedTitle());
+      entry.setLink('/articles/show?id=' + comment.articleTargetId +
+                    '#comment' + comment.id);
+      entry.setPublishedDate(comment.createTime);
 
       var description = new com.sun.syndication.feed.synd.SyndContentImpl();
       description.setType('text/html');
-      description.setValue(comments[i].getMarkdownedText());
+      description.setValue(comment.getMarkdownedText());
       entry.setDescription(description);
 
       entries.add(entry);
