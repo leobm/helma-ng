@@ -1,4 +1,4 @@
-importFromModule('app.models.User', '*');
+importFromModule('app.models.user', '*');
 
 
 function getChecks() {

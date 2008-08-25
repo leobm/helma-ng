@@ -3,7 +3,7 @@ importFromModule('helma.skin', 'render');
 importFromModule('app.modules.formHandling', 'handleMessage');
 
 importFromModule('app.modules.security', 'getChecks');
-importFromModule('app.models.User', 'getSessionUser');
+importFromModule('app.models.user', 'getSessionUser');
 
 
 function renderView(context, skinName) {

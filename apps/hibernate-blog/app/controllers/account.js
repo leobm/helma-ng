@@ -2,7 +2,7 @@ importFromModule('app.modules.security', 'getChecks');
 importFromModule('app.modules.rendering', '*');
 importFromModule('app.modules.formHandling', 'handlePostReq');
 
-importFromModule('app.models.User', '*');
+importFromModule('app.models.user', '*');
 
 
 function main_action() {

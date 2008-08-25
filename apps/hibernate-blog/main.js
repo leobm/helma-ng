@@ -1,6 +1,6 @@
 importFromModule('helma.simpleweb', 'handleRequest');
 
-importFromModule('app.models.User', 'User');
+importFromModule('app.models.user', 'User');
 
 importModule('app.controllers.account', 'account');
 importModule('app.controllers.articles', 'articles');
