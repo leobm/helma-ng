@@ -167,7 +167,7 @@ this.initStore();
       var constructor = store.typeRegistry[object.$type$];
       var instance = new constructor();
 
-      for (var i in instance) {
+      for (i in instance) {
          if (i != '$type$') {
             object[i] = instance[i];
          }
@@ -205,12 +205,12 @@ function Storable(object, properties) {
    var scriptableMap = new ScriptableMap(new java.util.HashMap());
 
    // add all instance methods of object to scriptableMap
-   for (var i in object) {
+   for (i in object) {
       scriptableMap[i] = object[i];
    }
 
    // add all properties and set $type$, accordingly
-   for (var j in properties) {
+   for (j in properties) {
       scriptableMap[j] = properties[j];
    }
    scriptableMap.$type$ = type;
@@ -334,7 +334,7 @@ function Store() {
          case 'find':
             result = new ScriptableList(sess.find(new java.lang.String(params.query)));
 
-            for (var i in result) {
+            for (i in result) {
                result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
             }
             break;
@@ -346,7 +346,7 @@ function Store() {
 
             result = new ScriptableList(criteria.list());
 
-            for (var i in result) {
+            for (i in result) {
                result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
             }
             break;
@@ -380,7 +380,7 @@ function Store() {
 
             result = new ScriptableList(criteria.list());
 
-            for (var i in result) {
+            for (i in result) {
                result[i] = this.addInstanceMethods(new ScriptableMap(result[i]));
             }
             break;
@@ -416,7 +416,7 @@ Set.prototype.helmatize = function () {
    var item, items = [];
    var arraySet = this.toArray();
 
-   for (var i in arraySet) {
+   for (i in arraySet) {
       item = new ScriptableMap(arraySet[i]);
       items[i] = addInstanceMethods(item);
    }

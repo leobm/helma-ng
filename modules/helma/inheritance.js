@@ -22,7 +22,7 @@ function mixin(object, constructor) {
 
    var instance = new constructor();
 
-   for (var i in instance) {
+   for (i in instance) {
       object[i] = instance[i];
    }
 

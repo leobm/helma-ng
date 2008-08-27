@@ -22,6 +22,10 @@ testCase.testTruth = function () {
 testCase.testHibernate = function () {
    db.beginTxn();
 
+   db.store.query('delete from Article').executeUpdate();
+   db.store.query('delete from Comment').executeUpdate();
+   db.store.query('delete from User').executeUpdate();
+
    createTestUser();
 
    assertEqual(User.all().size(), 1);
