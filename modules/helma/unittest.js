@@ -1,4 +1,5 @@
 importModule("core.string");
+importModule("helma.rhino");
 importFromModule("helma.shell", "writeln");
 
 var __shared__ = true;
@@ -1037,3 +1038,10 @@ var __shared__ = true;
    };
    
 }).call(this);
+
+
+if (__name__ == '__main__') {
+   for each (var test in helma.rhino.args) {
+      run(test);
+   }
+}
