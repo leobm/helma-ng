@@ -10,5 +10,5 @@ importModule('modules.typeExtensions');
 if (__name__ == '__main__') {
    db.setConfigPath('config/test');
 
-   unittest.run('test.suite');
+   unittest.run('test.unit.suite');
 }

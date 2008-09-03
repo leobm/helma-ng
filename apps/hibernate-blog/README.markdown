@@ -17,7 +17,7 @@ How to Run the App
 
 3. Issue, e.g., the following command inside the hibernate-blog directory:
 
-   hibernate-blog> ./run.sh app.js
+   hibernate-blog> ./run script/app.js
 
 4. Then point your browser to:
 
@@ -31,7 +31,19 @@ How to Run the Unit Tests
 
 2. Issue, e.g., the following command inside the hibernate-blog dir:
 
-   hibernate-blog> ./run.sh test.js
+   hibernate-blog> ./run script/test.js
+
+
+How to Rebuild the DB Schema
+============================
+
+1. You need the dev DB to be setup (see above).
+
+2. Issue, e.g., the following command inside the hibernate-blog dir:
+
+   hibernate-blog> ./run script/db/rebuild.js
+
+Note: Keep in mind that this will delete any data stored in the DB.
 
 
 Dependencies

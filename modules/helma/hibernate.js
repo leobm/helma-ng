@@ -3,23 +3,23 @@
  */
 
 importJar('hibernate/antlr-2.7.6.jar');
-importJar('hibernate/asm-attrs.jar');
-importJar('hibernate/asm.jar');
-importJar('hibernate/cglib-2.1.3.jar');
-importJar('hibernate/commons-collections-2.1.1.jar');
-importJar('hibernate/commons-logging-1.0.4.jar');
-importJar('hibernate/dom4j-1.6.1.jar');
-importJar('hibernate/hibernate3.jar');
-importJar('hibernate/jta.jar');
 importJar('hibernate/c3p0-0.9.1.jar');
+importJar('hibernate/commons-collections-3.1.jar');
+importJar('hibernate/commons-logging-1.1.1.jar');
+importJar('hibernate/dom4j-1.6.1.jar');
 importJar('hibernate/ehcache-1.2.3.jar');
+importJar('hibernate/hibernate3.jar');
+importJar('hibernate/javassist-3.4.GA.jar');
+importJar('hibernate/jta-1.1.jar');
+importJar('hibernate/slf4j-api-1.4.2.jar');
+importJar('hibernate/slf4j-log4j12-1.4.2.jar');
 
 importModule('helma.rhino', 'rhino');
 importFromModule('helma.functional', 'partial');
 importModule('helma.logging', 'logging');
 var log = logging.getLogger(__name__);
 
-var __shared__ = true;
+__shared__ = true;
 
 
 // used for holding the Store instance
@@ -42,6 +42,14 @@ this.initStore();
     */
    this.setConfigPath = function (path) {
       configPropsFileRelativePath = path + '/hibernate.properties';
+   };
+
+
+   /**
+    * Use this for setting the path where the *.hbm.xml mapping files resides.
+    */
+   this.setMappingsDir = function (path) {
+      mappingsDirRelativePath = path;
    };
 
 
@@ -130,17 +138,30 @@ this.initStore();
                          'org.hibernate.transaction.JDBCTransactionFactory');
       // enable session binding to managed context
       config.setProperty('hibernate.current_session_context_class', 'thread');
-      // enable the second level cache
-      config.setProperty('hibernate.cache.use_second_level_cache', 'true');
+      // enable the second level query cache
       config.setProperty('hibernate.cache.use_query_cache', 'true');
       // use easy hibernate (eh) cache
       config.setProperty('hibernate.cache.provider_class',
-                         'net.sf.ehcache.hibernate.SingletonEhCacheProvider');
+                         'org.hibernate.cache.EhCacheProvider');
+      // use c3p0 connection pooling
+      config.setProperty('hibernate.connection.provider_class',
+                         'org.hibernate.connection.C3P0ConnectionProvider');
 
       isConfigured = true;
       log.info('Configuration set.');
 
       sessionFactory = config.buildSessionFactory();
+   };
+
+
+   /**
+    * Use this for rebuilding the DB schema from the *.hbm.xml mapping files.
+    */
+   this.rebuildDbSchema = function () {
+      setConfig();
+
+      new org.hibernate.tool.hbm2ddl.SchemaExport(config).setOutputFile('db/schema.sql')
+                                                         .execute(true, true, false, false);
    };
 
 

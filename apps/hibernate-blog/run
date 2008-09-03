@@ -1,0 +1,32 @@
+#!/bin/sh
+# Shell script for running Helma NG with a JDK-like virtual machine.
+
+# uncomment to set JAVA_HOME variable
+#JAVA_HOME=
+
+# options to pass to the Java virtual machine
+JAVA_OPTIONS="-server -Xmx256m"
+
+# adjust to set path of Helma NG installation
+HELMA_HOME="../.."
+
+
+###########################################################
+###### No user configuration needed below this line #######
+###########################################################
+
+# if JAVA_HOME variable is set, use it. Otherwise, Java executable
+# must be contained in PATH variable.
+if [ "$JAVA_HOME" ]; then
+   JAVA_CMD="$JAVA_HOME/bin/java"
+   # Check if java command is executable
+   if [ ! -x $JAVA_CMD ]; then
+      echo "Warning: JAVA_HOME variable may be set incorrectly:"
+      echo "         No executable found at $JAVA_CMD"
+   fi
+else
+   JAVA_CMD=java
+fi
+
+
+$JAVA_CMD $JAVA_OPTIONS -jar $HELMA_HOME/run.jar $1

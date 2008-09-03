@@ -25,6 +25,4 @@ function mixin(object, constructor) {
    for (i in instance) {
       object[i] = instance[i];
    }
-
-   return;
 }

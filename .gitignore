@@ -1,0 +1,9 @@
+.DS_Store
+doc/*
+docs/*
+demo-app/lib
+.svn
+run.jar
+shell.jar
+lib/
+classes/

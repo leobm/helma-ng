@@ -4,7 +4,7 @@
 function Post() {
 
    this.getFormattedCreateTime = function () {
-      return this.createTime.format('yyyy-MM-dd, HH:mm');
+      return "'" + this.createTime.format('yy, MMM d, h:mm a');
    };
 
    this.getCreatorName = function () {
