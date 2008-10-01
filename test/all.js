@@ -1,4 +1,4 @@
-var {TestSuite} = loadModule("helma.unittest");
+var {TestSuite} = load("helma.unittest");
 
 function run() {
     var suite = new TestSuite("Helma Testsuite");

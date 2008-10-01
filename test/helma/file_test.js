@@ -1,6 +1,6 @@
-includeModule('helma.unittest');
-var {File} = loadModule('helma.file');
-loadModule('core.string');
+include('helma.unittest');
+var {File} = load('helma.file');
+load('core.string');
 
 var testCase = new TestCase('helma.file');
 

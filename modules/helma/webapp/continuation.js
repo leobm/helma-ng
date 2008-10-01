@@ -27,8 +27,8 @@
  *
  */
 
-var log = loadModule('helma.logging').getLogger(__name__);
-var system = loadModule('helma.system');
+var log = load('helma.logging').getLogger(__name__);
+var system = load('helma.system');
 system.addCallback('onInvoke', 'continuation-support', function(req) {
     if (req && req.params.helma_continuation != null) {
         system.setRhinoOptimizationLevel(-1);

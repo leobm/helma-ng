@@ -11,7 +11,7 @@ const global = this;
      * @param moduleName the module name such as 'core.object'
      * @return {Object} the module scope
      */
-    this.loadModule = function(moduleName) {
+    this.load = function(moduleName) {
         return getRhinoEngine().loadModule(getRhinoContext(), moduleName, this);
     };
 
@@ -19,8 +19,8 @@ const global = this;
      * Load a module and include all its properties in the calling scope.
      * @param moduleName the module name such as 'core.object'
      */
-    this.includeModule = function(moduleName) {
-        var module = this.loadModule(moduleName);
+    this.include = function(moduleName) {
+        var module = this.load(moduleName);
         for (var [key, value] in module) {
             /* if (value && value.__parent__ && value.__parent__ != module) {
                 // only copy values that were defined in the module
@@ -91,15 +91,5 @@ const global = this;
     var getRhinoEngine = function getRhinoEngine() {
         return getRhinoContext().getThreadLocal("engine");
     };
-
-
-    /*
-     * Support for defining thread-local variables in the global scope.
-     */
-    var threadLocal = new JavaAdapter(java.lang.ThreadLocal, {
-        initialValue: function() {
-            return {};
-        }
-    });
 
 })(global);

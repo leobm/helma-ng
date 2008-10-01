@@ -1,6 +1,6 @@
 
 try {
-    var log = loadModule('helma.logging').getLogger(__name__);
+    var log = load('helma.logging').getLogger(__name__);
 } catch (error) {
     // logging module not available
 }

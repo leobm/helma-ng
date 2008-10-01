@@ -1,15 +1,15 @@
-var webapp = loadModule('helma.webapp');
+var webapp = load('helma.webapp');
 var handleRequest = webapp.handleRequest;
-var render = loadModule('helma.skin').render;
-// loadModule('helma.continuation');
+var render = load('helma.skin').render;
+// load('helma.continuation');
 var helma = {
-    logging : loadModule('helma.logging')
+    logging : load('helma.logging')
 }
 helma.logging.enableResponseLog();
 var log = helma.logging.getLogger(__name__);
 
 var mount = {
-    point: loadModule('webmodule')
+    point: load('webmodule')
 }
 
 // the main action is invoked for http://localhost:8080/

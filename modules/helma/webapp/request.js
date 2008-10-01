@@ -1,6 +1,6 @@
-loadModule('core.string');
-var log = loadModule('helma.logging').getLogger(__name__);
-var system = loadModule('helma.system');
+load('core.string');
+var log = load('helma.logging').getLogger(__name__);
+var system = load('helma.system');
 system.addHostObject(org.helma.web.Request);
 system.addHostObject(org.helma.web.Session);
 

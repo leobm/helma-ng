@@ -1,10 +1,10 @@
 /*global getResource importModule parseSkin */
 
-loadModule('core.string');
-loadModule('core.object');
-var filters = loadModule('helma.filters');
-var log = loadModule('helma.logging').getLogger(__name__);
-var system = loadModule('helma.system');
+load('core.string');
+load('core.object');
+var filters = load('helma.filters');
+var log = load('helma.logging').getLogger(__name__);
+var system = load('helma.system');
 system.addHostObject(org.helma.template.MacroTag);
 
 /**

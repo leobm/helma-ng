@@ -45,8 +45,8 @@
 
 var __shared__ = true;
 
-loadModule('core.object');
-var log = loadModule('helma.logging').getLogger(__name__);
+load('core.object');
+var log = load('helma.logging').getLogger(__name__);
 
 (function () {
     var m = {

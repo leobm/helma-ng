@@ -1,4 +1,4 @@
-var system = loadModule('helma.system');
+var system = load('helma.system');
 system.addHostObject(org.helma.web.Response);
 
 system.addCallback("onResponse", "debugFlusher", function(res) {
@@ -14,7 +14,7 @@ system.addCallback("onResponse", "debugFlusher", function(res) {
  * @param scope
  */
 Response.prototype.render = function(skin, context, scope) {
-    var render = loadModule('helma.skin').render;
+    var render = load('helma.skin').render;
     this.write(render(skin, context, scope));
 }
 

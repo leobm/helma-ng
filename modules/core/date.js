@@ -23,7 +23,7 @@ __shared__ = true;
  * application, for example by calling app.addRepository('modules/core/Date.js')
  */
 
-loadModule('core.object');
+load('core.object');
 
 Date.ONESECOND    = 1000;
 Date.ONEMINUTE    = 60 * Date.ONESECOND;
