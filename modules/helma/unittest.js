@@ -1,6 +1,6 @@
-loadModule("core.string");
-var system = loadModule("helma.system");
-var writeln = loadModule("helma.shell").writeln;
+require("core.string");
+var system = require("helma.system");
+var writeln = require("helma.shell").writeln;
 
 var __shared__ = true;
 
@@ -17,7 +17,7 @@ var __shared__ = true;
     * @returns The loaded module
     */
    var loadTestModule = function(module) {
-      return loadModule(module, "__currentTest__");
+      return require(module, "__currentTest__");
    };
 
    /**

@@ -23,9 +23,9 @@
  */
 
 // take care of any dependencies
-loadModule('core.object');
-loadModule('core.date');
-loadModule('core.string');
+require('core.object');
+require('core.date');
+require('core.string');
 
 
 /**
