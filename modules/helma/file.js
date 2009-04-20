@@ -428,6 +428,20 @@ function File(path) {
       return file.length();
    };
 
+  /**
+   * Returns the MimeType of the file represented by this File object. 
+   * <br /><br />
+   *
+   * @returns String The MimeType string
+   * @type String
+   */
+   this.getMimeType = function() {
+      // very simple, maybe should be replaced by a library like mime-util
+      var fileUrl = new java.net.URL('file://'+this.getAbsolutePath());
+      var conn = fileUrl.openConnection();
+      return conn.getContentType();
+  }
+
    /**
     * Tests whether the file represented by this File object is a directory.
     * 
