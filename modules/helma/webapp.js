@@ -7,13 +7,12 @@ require('core/string');
 
 include('helma/webapp/request');
 include('helma/webapp/response');
-import('helma/webapp/continuation', 'continuation');
 
 import('helma/system', 'system');
 import('helma/httpserver', 'server');
 import('helma/logging', 'logging');
 
-export('start', 'stop', 'getConfig', 'handleServletRequest', 'error', 'notfound');
+export('start', 'stop', 'getConfig', 'handleRequest', 'error', 'notfound');
 
 var log = logging.getLogger(__name__);
 
@@ -29,18 +28,13 @@ function handleRequest(env) {
     var config = getConfig();
     if (log.debugEnabled) log.debug('got config: ' + config.toSource());
 
-    var req = new Request(env['jack.servlet_request']);
-    var res = new Response(env['jack.servlet_response']);
+    var req = new Request(env);
+    var res = null;
+    // set up jack env, request and config properties in per-request env module
+    var webenv = require('helma/webapp/env');
+    webenv.init(env, req, config);
 
-    req.charset = res.charset = config.charset || 'utf8';
-    res.contentType = config.contentType || 'text/html';
-
-    // invoke onRequest
-    invokeMiddleware('onRequest', config.middleware, [req, res]);
-    // resume continuation?
-    if (continuation.resume(req, res)) {
-        return;
-    }
+    req.charset = config.charset || 'utf8';
 
     // resolve path and invoke action
     var path = req.path;
@@ -78,6 +72,8 @@ function handleRequest(env) {
         return null;
     }
 
+    
+
     try {
         log.debug('resolving path ' + path);
         if (config.urls instanceof Array) {
@@ -91,56 +87,68 @@ function handleRequest(env) {
                     log.debug("module: " + module);
                     // cut matching prefix from path
                     path = path.substring(match[0].length);
-                    // remove outer grouping
-                    match.shift();
                     // remove leading and trailing slashes
                     path = path.replace(/^\/+|\/+$/g, "");
                     //split
                     path = path.split(/\/+/);
                     var action = getAction(module, path[0]);
-                    if (typeof action == "function" /*&& path.length < action.length*/) {
+                    if (typeof action == "function" && path.length <= action.length) {
                         // add remaining path elements as additional action arguments
                         var actionArgs = path.slice(1).map(decodeURIComponent);
-                        var args = [req, res].concat(match).concat(actionArgs);
-                        invokeMiddleware('onAction',
-                                config.middleware,
-                                [req, res, action, actionArgs]);
-                        action.apply(module, args);
-                        return;
+                        var args = [req].concat(actionArgs);
+                        var middleware = config.middleware;
+                        var middlewareIndex = 0;
+                        // set up middleware chain in request object
+                        req.process = function() {
+                            if (middlewareIndex < middleware.length) {
+                                return invokeMiddleware(middleware[middlewareIndex++], [req]);
+                            } else {
+                                return action.apply(module, args);
+                            }
+                        }
+                        res = req.process();
                     }
                     break;
                 }
             }
         }
-        notfound(req, res);
     } catch (e) {
         if (e.retry) {
             throw e;
-        } else if (!e.redirect) {
-            invokeMiddleware('onError', config.middleware, [req, res, e]);
-            error(req, res, e);
+        } else if (e.redirect) {
+            return new RedirectResponse(e.redirect);
+        } else {
+            res = error(req, e);
         }
     } finally {
-        invokeMiddleware('onResponse', config.middleware, [req, res]);
+        // TODO
+        if (!res)
+            res = notfound(req);
+        if (!(res instanceof Array) && res.close)
+            res = res.close();
     }
+    return res;
 }
 
-function invokeMiddleware(hook, middleware, args) {
-    for (var i = 0; middleware && i < middleware.length; i++) {
-        var signature = middleware[i] + '.' + hook;
-        try {
-            var module = require(middleware[i]);
-            if (typeof module[hook] == 'function') {
-                log.debug('invoking middleware: ' + signature);
-                module[hook].apply(module, args);
-            }
-        } catch (e) {
-            if (e.retry) {
-                throw e;
-            } else if (!e.redirect) {
-                log.error('Error in ' + signature + ': ' + e);
-            }
+function invokeMiddleware(middleware, args) {
+    var functionName = 'handleRequest';
+    var dot = middleware.indexOf('.');
+    if (dot > -1) {
+        functionName = middleware.substring(dot + 1);
+        middleware = middleware.substring(0, dot);
+    }
+    try {
+        var module = require(middleware);
+        if (typeof module[functionName] !== 'function') {
+            throw new Error('Middleware function ' + functionName + ' is not defined in ' + middleware);
         }
+        log.debug('invoking middleware: ' + middleware);
+        return module[functionName].apply(module, args);
+    } catch (e) {
+        if (!e.retry && !e.redirect) {
+            log.error('Error in ' + middleware + ': ' + e);
+        }
+        throw e;
     }
 }
 
@@ -148,7 +156,8 @@ function invokeMiddleware(hook, middleware, args) {
  * Standard error page
  * @param e the error that happened
  */
-function error(req, res, e) {
+function error(req, e) {
+    var res = new Response();
     res.status = 500;
     res.contentType = 'text/html';
     res.writeln('<h2>', e, '</h2>');
@@ -167,18 +176,19 @@ function error(req, res, e) {
     } else {
         log.error(e.toString());
     }
-    return null;
+    return res.close();
 }
 
 /**
  * Standard notfound page
  */
-function notfound(req, res) {
+function notfound(req) {
+    var res = new Response();
     res.status = 404;
     res.contentType = 'text/html';
     res.writeln('<h1>Not Found</h1>');
     res.writeln('The requested URL', req.path, 'was not found on the server.');
-    return null;
+    return res.close();
 }
 
 /**
